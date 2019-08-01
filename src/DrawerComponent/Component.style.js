@@ -1,20 +1,23 @@
 export default {
   container: {
-    paddingTop: 20,
     flex: 1
   },
-  navItemStyle: {
-    padding: 10
+  ProfilePicStyle:{
+    backgroundColor: 'lightgrey',
+    flexDirection:'row',
+    padding:20
   },
-  navSectionStyle: {
-    backgroundColor: 'lightgrey'
+  ProfileTextStyle:{
+    marginLeft:20,
+    fontSize:15,
+    fontWeight: 'bold'
   },
-  sectionHeadingStyle: {
-    paddingVertical: 10,
-    paddingHorizontal: 5
+  NavHeaderStyle:{
+    flexDirection:'row',
+    padding:20
   },
-  footerContainer: {
-    padding: 20,
-    backgroundColor: 'lightgrey'
+  NavHeaderTextStyle:{
+    marginLeft:20,
+    fontSize:13
   }
 };
