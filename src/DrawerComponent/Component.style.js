@@ -1,3 +1,5 @@
+import {Dimensions} from "react-native"
+const { width, height } = Dimensions.get("window");
 export default {
   container: {
     flex: 1
@@ -5,7 +7,7 @@ export default {
   ProfilePicStyle:{
     backgroundColor: 'lightgrey',
     flexDirection:'row',
-    padding:20
+    padding:22
   },
   ProfileTextStyle:{
     marginLeft:20,

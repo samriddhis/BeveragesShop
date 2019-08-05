@@ -5,6 +5,7 @@ import MyAccountComponent from "./src/MyAccountComponent";
 import CartComponent from "./src/CartComponent";
 import LogoutComponent from "./src/LogoutComponent";
 import DrawerComponent from "./src/DrawerComponent/DrawerComponent";
+import HeaderComponent from "./src/HeaderComponent";
 
 export default DrawerNavigator(
   {
