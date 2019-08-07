@@ -11,6 +11,7 @@ import {
 import HeaderComponent from "./HeaderComponent";
 const { height, width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class HomeComponent extends React.Component {
   constructor(props) {
@@ -23,7 +24,19 @@ export default class HomeComponent extends React.Component {
   }
   componentDidMount() {
     this.getListMetaData();
+    this.getStoredCartValue("CART_VALUE");
   }
+  getStoredCartValue = async key => {
+    try {
+      const storedItems = await AsyncStorage.getItem(key);
+      const storedVal = JSON.parse(storedItems);
+      if (storedVal) {
+        cartVar = storedVal;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   getListMetaData() {
     fetch("http://starlord.hackerearth.com/beercraft")
       .then(response => response.json())
@@ -37,6 +50,20 @@ export default class HomeComponent extends React.Component {
         console.log(error);
       });
   }
+  _storeInCart(item) {
+    cartVar.push(item);
+    this.storeInAsyncStorage("CART_VALUE", JSON.stringify(cartVar));
+    console.log("added in cart");
+  }
+  storeInAsyncStorage = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.log(error);
+      // Error saving data
+    }
+  };
+
   _renderItem = ({ item, index }) => {
     return (
       <View style={styles.listViewStyle}>
@@ -61,6 +88,7 @@ export default class HomeComponent extends React.Component {
             type={"font-awesome"}
             size={25}
             style={styles.IconStyle}
+            onPress={() => this._storeInCart(item)}
           />
         </View>
       </View>
@@ -122,7 +150,7 @@ const styles = StyleSheet.create({
     padding: width / 20
   },
   DetailsStyle: {
-    width:width/1.5,
+    width: width / 1.5,
     flexDirection: "column",
     padding: 10
   },
