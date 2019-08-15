@@ -89,7 +89,6 @@ class HomeComponent extends React.Component {
         item
       }
     });
- //  this.storeInAsyncStorage("CART_VALUE", JSON.stringify(cartVar));
   }
 
   shouldComponentUpdate(props,state){

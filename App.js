@@ -11,6 +11,7 @@ import { View, StyleSheet } from "react-native";
 import RouterConfig from "./RouterConfig";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const initialList = {
   cartValue: []
@@ -44,10 +45,38 @@ export default class App extends React.Component {
     super(props);
   }
 
-  componentWillUnmount(){
-    console.log("application is going to close",store.getState())
-    //here you can save your data in async storage
+  componentDidMount() {
+    debugger;
+    this.getStoredCartValue("CART_VALUE");
   }
+  getStoredCartValue = async key => {
+    try {
+      const storedItems = await AsyncStorage.getItem(key);
+      const storedVal = JSON.parse(storedItems);
+      if (storedVal) {
+        cartValue = storedVal;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  componentWillUnmount(){
+    debugger;
+     //here you can save your data in async storage
+    console.log("application is going to close",store.getState().cartStore.cartValue)
+    this.storeInAsyncStorage("CART_VALUE",JSON.stringify(store.getState().cartStore.cartValue) );
+  }
+
+  storeInAsyncStorage = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.log(error);
+      // Error saving data
+    }
+  };
+
   render() {
     return (
       <Provider store={store}>
