@@ -12,13 +12,17 @@ import HeaderComponent from "./HeaderComponent";
 const { height, width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
+import InputSpinner from "react-native-number-spinner";
+import { connect } from "react-redux";
 
-export default class HomeComponent extends React.Component {
+class HomeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
-      listValue: []
+      listValue: [],
+      countVal: 0,
+      showSpinner: false
     };
     navVar = this.props.navigation;
   }
@@ -37,23 +41,60 @@ export default class HomeComponent extends React.Component {
       console.log(error);
     }
   };
-  getListMetaData() {
-    fetch("http://starlord.hackerearth.com/beercraft")
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          isLoading: false,
-          listValue: responseJson
-        });
-      })
-      .catch(error => {
-        console.log(error);
+  async getListMetaData() {
+    try {
+      let resp = await this.getListValue();
+      var result = resp.map(function(el) {
+        var o = Object.assign({}, el);
+        o.count = 0;
+        return o;
       });
+      this.setState({
+        isLoading: false,
+        listValue: result
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({ isLoading: false, listValue: [] });
+    }
   }
-  _storeInCart(item) {
+  getListValue() {
+    return new Promise(function(resolve, reject) {
+      try {
+        fetch("http://starlord.hackerearth.com/beercraft")
+          .then(response => response.json())
+          .then(responseJson => {
+            resolve(responseJson);
+          })
+          .catch(error => {
+            console.log(error);
+            reject(error);
+          });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  _storeInCart1(item) {
+    item.count = item.count + 1;
+    this.setState({ showSpinner: true, countVal: item.count });
     cartVar.push(item);
     this.storeInAsyncStorage("CART_VALUE", JSON.stringify(cartVar));
     console.log("added in cart");
+  }
+  _storeInCart(item) {
+    this.props.dispatch({
+      type: "ADD_VALUE_IN_STORE",
+      payload: {
+        item
+      }
+    });
+ //  this.storeInAsyncStorage("CART_VALUE", JSON.stringify(cartVar));
+  }
+
+  shouldComponentUpdate(props,state){
+    console.log("props updated are",props)
+    return true
   }
   storeInAsyncStorage = async (key, value) => {
     try {
@@ -162,5 +203,19 @@ const styles = StyleSheet.create({
   IconViewStyle: {
     marginTop: 20,
     marginLeft: 3
+  },
+  SpinnerStyle: {
+    position: "absolute",
+    marginTop: 20,
+    marginLeft: width / 1.3,
+    justifyContent: "flex-end"
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    cartValue: state.cartStore.cartValue
+  };
+}
+
+export default connect(mapStateToProps)(HomeComponent);

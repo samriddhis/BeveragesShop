@@ -11,17 +11,29 @@ import HeaderComponent from "./HeaderComponent";
 import AsyncStorage from "@react-native-community/async-storage";
 import { Icon } from "react-native-elements";
 const { width, height } = Dimensions.get("window");
+import { connect } from "react-redux";
 
-export default class CartComponent extends React.Component {
+class CartComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true,
-      cartValue: []
+      isLoading: false,
+      cartValueArr: this.props.cartValue
     };
+    //  cartValue:cartValue
   }
   componentDidMount() {
-    this.retrieveFromAsyncStorage("CART_VALUE");
+    // this.retrieveFromAsyncStorage("CART_VALUE");
+  }
+
+  _updateCartValue = updatedVal => {
+    this.setState({ cartValueArr: updatedVal ,isLoading: false});
+  };
+  shouldComponentUpdate(props, state) {
+    if (props.cartValue !== this.props.cartValue) {
+      this._updateCartValue(props.cartValue);
+    }
+    return true;
   }
   retrieveFromAsyncStorage = async key => {
     try {
@@ -32,8 +44,16 @@ export default class CartComponent extends React.Component {
       // Error while retrieving data
     }
   };
-
   deleteFromCart(item) {
+    this.props.dispatch({
+      type: "DELETE_VALUE_FROM_STORE",
+      payload: {
+        item
+      }
+    });
+    // this.setState({ isLoading: true });
+  }
+  deleteFromCart1(item) {
     var updatedVal = cartVar.filter(function(element) {
       return element.id != item.id;
     });
@@ -99,7 +119,7 @@ export default class CartComponent extends React.Component {
         ) : (
           <FlatList
             style={styles.FlatListStyle}
-            data={this.state.cartValue}
+            data={this.state.cartValueArr}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this._renderItem}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -151,3 +171,11 @@ const styles = StyleSheet.create({
     marginLeft: 3
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    cartValue: state.cartStore.cartValue
+  };
+}
+
+export default connect(mapStateToProps)(CartComponent);
