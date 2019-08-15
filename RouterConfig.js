@@ -9,11 +9,11 @@ import HeaderComponent from "./src/HeaderComponent";
 
 export default DrawerNavigator(
   {
-    HomeScreen: {
-      screen: HomeComponent
-    },
     LoginScreen: {
       screen: LoginComponent
+    },
+    HomeScreen: {
+      screen: HomeComponent
     },
     MyAccScreen: {
       screen: MyAccountComponent

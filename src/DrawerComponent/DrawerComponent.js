@@ -14,6 +14,10 @@ class DrawerComponent extends Component {
     this.props.navigation.dispatch(DrawerActions.closeDrawer())
   };
 
+  _pressLogout(){
+    this.props.navigation.navigate("LoginScreen")
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -43,7 +47,7 @@ class DrawerComponent extends Component {
             <Text style={styles.NavHeaderTextStyle}>Cart</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.NavHeaderStyle} onPress={this.navigateToScreen("LogoutScreen")}>
+          <TouchableOpacity style={styles.NavHeaderStyle} onPress={()=>this._pressLogout()}>
           <Icon type="simple-line-icon" name="logout" size={20}/>
             <Text style={styles.NavHeaderTextStyle}>Logout</Text>
           </TouchableOpacity>
