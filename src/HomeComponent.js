@@ -35,8 +35,13 @@ class HomeComponent extends React.Component {
     try {
       const storedItems = await AsyncStorage.getItem(key);
       const storedVal = JSON.parse(storedItems);
+      console.log("reading first time from storage",storedVal)
       if (storedVal) {
-        cartVar = storedVal;
+        //cartVar = storedVal;
+        this.props.dispatch({
+          type:"ADD_CART_VALUE_FROM_STORAGE",
+          payload:storedVal
+        })
       }
     } catch (error) {
       console.log(error);
@@ -93,12 +98,15 @@ class HomeComponent extends React.Component {
   }
 
   shouldComponentUpdate(props,state){
-    console.log("props updated are",props)
-    this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
+    if(props.cartValue !== this.props.cartValue){
+      this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
+    }
+   
     return true
   }
   storeInAsyncStorage = async (key, value) => {
     try {
+      console.log(`adding ${key} in cart aS`,value)
       await AsyncStorage.setItem(key, value);
     } catch (error) {
       console.log(error);

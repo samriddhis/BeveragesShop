@@ -23,7 +23,7 @@ class CartComponent extends React.Component {
     //  cartValue:cartValue
   }
   componentDidMount() {
-    // this.retrieveFromAsyncStorage("CART_VALUE");
+    this.retrieveFromAsyncStorage("CART_VALUE");
   }
 
   _updateCartValue = updatedVal => {

@@ -18,9 +18,9 @@ const initialList = {
 };
 
 const cartStore = (state = initialList, action) => {
+  console.log("action dispachted", action);
   switch (action.type) {
     case "ADD_VALUE_IN_STORE":
-      console.log("action dispachted", action);
       return {
         ...state,
         cartValue: [...state.cartValue,action.payload.item]
@@ -29,6 +29,11 @@ const cartStore = (state = initialList, action) => {
       return{
         ...state,
         cartValue:state.cartValue.filter(item => item !== action.payload.item)
+      }
+    case "ADD_CART_VALUE_FROM_STORAGE":
+      return{
+        ...state,
+        cartValue:action.storedVal
       }
     default:
       return state;
@@ -44,21 +49,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount() {
-    this.getStoredCartValue("CART_VALUE");
-  }
-  getStoredCartValue = async key => {
-    try {
-      const storedItems = await AsyncStorage.getItem(key);
-      const storedVal = JSON.parse(storedItems);
-      if (storedVal) {
-        cartValue = storedVal;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   componentWillUnmount(){
      //here you can save your data in async storage
