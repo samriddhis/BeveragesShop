@@ -8,6 +8,7 @@ import {
 } from "react-native";
 const { width, height } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
+import {DrawerActions} from "react-navigation"
 
 export default class HeaderComponent extends React.Component {
   constructor(props) {

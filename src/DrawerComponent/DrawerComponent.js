@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import styles from "./Component.style";
-import { NavigationActions ,DrawerActions} from "react-navigation";
+import {  NavigationActions ,DrawerActions} from "react-navigation";
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 

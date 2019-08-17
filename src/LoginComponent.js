@@ -55,7 +55,7 @@ export default class LoginComponent extends React.Component {
         console.log("unable to login");
         Alert.alert(response.message);
       } else {
-        this.props.navigation.navigate("HomeScreen")
+       this.props.navigation.navigate("HomeScreen")
        /* this.props.navigation.dispatch(
           StackActions.reset({
             index: 0,

@@ -14,6 +14,7 @@ import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import InputSpinner from "react-native-number-spinner";
 import { connect } from "react-redux";
+import ShimmerComponent from "./ShimmerComponent"
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class HomeComponent extends React.Component {
 
   shouldComponentUpdate(props,state){
     console.log("props updated are",props)
+    this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
     return true
   }
   storeInAsyncStorage = async (key, value) => {
@@ -139,13 +141,14 @@ class HomeComponent extends React.Component {
       <View style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"Home page"} />
         {this.state.isLoading ? (
-          <View style={styles.indicatorViewStyle}>
+        /*  <View style={styles.indicatorViewStyle}>
             <ActivityIndicator
               color="#3973ad"
               size="large"
               style={styles.indicatorStyle}
             />
-          </View>
+          </View>*/
+          <ShimmerComponent/>
         ) : (
           <FlatList
             style={styles.FlatListStyle}
