@@ -55,13 +55,13 @@ export default class LoginComponent extends React.Component {
         console.log("unable to login");
         Alert.alert(response.message);
       } else {
-       this.props.navigation.navigate("HomeScreen")
-       /* this.props.navigation.dispatch(
+       //this.props.navigation.navigate("HomeScreen")
+        this.props.navigation.dispatch(
           StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: "HomeScreen" })]
+            actions: [NavigationActions.navigate({ routeName: "DrawerNavigator" })]
           })
-        );*/
+        );
         this.setState({
           userName: "",
           passWord: ""

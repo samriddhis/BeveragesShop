@@ -20,14 +20,34 @@ class CartComponent extends React.Component {
       isLoading: false,
       cartValueArr: this.props.cartValue
     };
+
     //  cartValue:cartValue
   }
   componentDidMount() {
     this.retrieveFromAsyncStorage("CART_VALUE");
+  //  this._getUniqueValue();
+  }
+
+  _getUniqueValue() {
+    console.log("hello");
+    let mymap = new Map();
+    var that = this;
+    unique = this.state.cartValueArr.filter(el => {
+      const val = mymap.get(el.id);
+      if (val) {
+        return false;
+      }
+      else{
+        mymap.set(el.name, el.id);
+        return true;
+      } 
+    });
+    this.setState({cartValueArr:unique})
+    console.log(unique)
   }
 
   _updateCartValue = updatedVal => {
-    this.setState({ cartValueArr: updatedVal ,isLoading: false});
+    this.setState({ cartValueArr: updatedVal, isLoading: false });
   };
   shouldComponentUpdate(props, state) {
     if (props.cartValue !== this.props.cartValue) {
@@ -39,7 +59,7 @@ class CartComponent extends React.Component {
     try {
       const retrievedItem = await AsyncStorage.getItem(key);
       const cartVal = JSON.parse(retrievedItem);
-      this.setState({ cartValue: cartVal, isLoading: false });
+      this.setState({ cartValueArr: cartVal, isLoading: false });
     } catch (error) {
       // Error while retrieving data
     }

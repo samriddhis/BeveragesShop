@@ -21,9 +21,17 @@ const cartStore = (state = initialList, action) => {
   console.log("action dispachted", action);
   switch (action.type) {
     case "ADD_VALUE_IN_STORE":
+      let temp = action.payload.item
+      let index = state.cartValue.findIndex(item => item.id === temp.id)
+      let finalValue = state.cartValue.slice()
+      if(index >= 0){
+        finalValue[index].count = finalValue[index].count+1; 
+      }else{
+        finalValue.push(temp)
+      }
       return {
         ...state,
-        cartValue: [...state.cartValue,action.payload.item]
+        cartValue: finalValue
       };
     case "DELETE_VALUE_FROM_STORE":
       return{
@@ -33,7 +41,7 @@ const cartStore = (state = initialList, action) => {
     case "ADD_CART_VALUE_FROM_STORAGE":
       return{
         ...state,
-        cartValue:action.storedVal
+        cartValue:action.payload
       }
     default:
       return state;

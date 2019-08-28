@@ -9,7 +9,6 @@ import HeaderComponent from "./src/HeaderComponent";
 
 const drawerNav = createDrawerNavigator(
   {
-    LoginScreen:LoginComponent,
     HomeScreen: HomeComponent,
     MyAccScreen:MyAccountComponent,
     CartScreen:CartComponent,
@@ -22,16 +21,15 @@ const drawerNav = createDrawerNavigator(
   }
 );
 
-/*const stackNav = createStackNavigator(
+const stackNav = createStackNavigator(
   {
     LoginScreen:LoginComponent,
-    HomeScreen: HomeComponent,
     DrawerNavigator: drawerNav
   },
   {
     initialRouteName:"LoginScreen",
     headerMode: "none"
   } 
-)*/
+)
 
-export default drawerNav
+export default stackNav
