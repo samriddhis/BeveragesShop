@@ -27,6 +27,7 @@ const cartStore = (state = initialList, action) => {
       if(index >= 0){
         finalValue[index].count = finalValue[index].count+1; 
       }else{
+        temp.count=1;
         finalValue.push(temp)
       }
       return {
@@ -34,9 +35,17 @@ const cartStore = (state = initialList, action) => {
         cartValue: finalValue
       };
     case "DELETE_VALUE_FROM_STORE":
+        let removeValue = action.payload.item
+        let indexOfRemove = state.cartValue.findIndex(item => item.id === removeValue.id)
+        let updateValue = state.cartValue.slice()
+        if(updateValue[indexOfRemove].count > 0){
+          updateValue[indexOfRemove].count = updateValue[indexOfRemove].count-1; 
+        }else{
+        updateValue = updateValue.filter(item => item.id !== action.payload.item.id)
+        }
       return{
         ...state,
-        cartValue:state.cartValue.filter(item => item !== action.payload.item)
+        cartValue:updateValue
       }
     case "ADD_CART_VALUE_FROM_STORAGE":
       return{

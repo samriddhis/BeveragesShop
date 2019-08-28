@@ -25,10 +25,19 @@ class CartComponent extends React.Component {
   }
   componentDidMount() {
     this.retrieveFromAsyncStorage("CART_VALUE");
-  //  this._getUniqueValue();
   }
 
-  _getUniqueValue() {
+  retrieveFromAsyncStorage = async key => {
+    try {
+      const retrievedItem = await AsyncStorage.getItem(key);
+      const cartVal = JSON.parse(retrievedItem);
+      this.setState({ cartValueArr: cartVal, isLoading: false });
+    } catch (error) {
+      // Error while retrieving data
+    }
+  };
+  
+  /*_getUniqueValue() {
     console.log("hello");
     let mymap = new Map();
     var that = this;
@@ -44,7 +53,7 @@ class CartComponent extends React.Component {
     });
     this.setState({cartValueArr:unique})
     console.log(unique)
-  }
+  }*/
 
   _updateCartValue = updatedVal => {
     this.setState({ cartValueArr: updatedVal, isLoading: false });
@@ -52,18 +61,20 @@ class CartComponent extends React.Component {
   shouldComponentUpdate(props, state) {
     if (props.cartValue !== this.props.cartValue) {
       this._updateCartValue(props.cartValue);
+      this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
     }
     return true;
   }
-  retrieveFromAsyncStorage = async key => {
+  storeInAsyncStorage = async (key, value) => {
     try {
-      const retrievedItem = await AsyncStorage.getItem(key);
-      const cartVal = JSON.parse(retrievedItem);
-      this.setState({ cartValueArr: cartVal, isLoading: false });
+      console.log(`adding ${key} in cart aS`,value)
+      await AsyncStorage.setItem(key, value);
     } catch (error) {
-      // Error while retrieving data
+      console.log(error);
+      // Error saving data
     }
   };
+ 
   deleteFromCart(item) {
     this.props.dispatch({
       type: "DELETE_VALUE_FROM_STORE",
