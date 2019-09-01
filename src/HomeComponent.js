@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import InputSpinner from "react-native-number-spinner";
 import { connect } from "react-redux";
 import ShimmerComponent from "./ShimmerComponent"
+import { getBeerList } from "./BeerSaga";
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class HomeComponent extends React.Component {
     navVar = this.props.navigation;
   }
   componentDidMount() {
-    this.getListMetaData();
     this.getStoredCartValue("CART_VALUE");
+    this.props.dispatch(getBeerList({}))
   }
   getStoredCartValue = async key => {
     try {
@@ -47,40 +48,7 @@ class HomeComponent extends React.Component {
       console.log(error);
     }
   };
-  async getListMetaData() {
-    try {
-      let resp = await this.getListValue();
-      var result = resp.map(function(el) {
-        var o = Object.assign({}, el);
-        o.count = 0;
-        return o;
-      });
-      this.setState({
-        isLoading: false,
-        listValue: result
-      });
-    } catch (error) {
-      console.log(error);
-      this.setState({ isLoading: false, listValue: [] });
-    }
-  }
-  getListValue() {
-    return new Promise(function(resolve, reject) {
-      try {
-        fetch("http://starlord.hackerearth.com/beercraft")
-          .then(response => response.json())
-          .then(responseJson => {
-            resolve(responseJson);
-          })
-          .catch(error => {
-            console.log(error);
-            reject(error);
-          });
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+
   _storeInCart1(item) {
     item.count = item.count + 1;
     this.setState({ showSpinner: true, countVal: item.count });
@@ -98,10 +66,14 @@ class HomeComponent extends React.Component {
   }
 
   shouldComponentUpdate(props,state){
+    console.log("props rae",props)
     if(props.cartValue !== this.props.cartValue){
       this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
     }
    
+    if(props.beerList && props.beerList !== this.props.beerList){
+      this.setState({listValue:props.beerList,isLoading:false})
+    }
     return true
   }
   storeInAsyncStorage = async (key, value) => {
@@ -223,8 +195,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
+  console.log("state is",state)
   return {
-    cartValue: state.cartStore.cartValue
+    cartValue: state.cartStore.cartValue,
+    beerList:state.cartStore.beerList
   };
 }
 
