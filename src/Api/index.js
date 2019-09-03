@@ -23,6 +23,26 @@ class Api{
           }
         });
       }
+
+      checkLogin(params) {
+        return new Promise(function(resolve, reject) {
+          fetch("http://192.168.1.41:3000/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              username: params.user,
+              password: params.pass
+            })
+          })
+            .then(res => res.json().then(response => resolve(response)))
+            .catch(error => {
+              console.log("rejecting error", error);
+              reject(error);
+            });
+        });
+      }
 }
 
 export default new Api()
