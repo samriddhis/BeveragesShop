@@ -38,7 +38,6 @@ class HomeComponent extends React.Component {
       const storedVal = JSON.parse(storedItems);
       console.log("reading first time from storage",storedVal)
       if (storedVal) {
-        //cartVar = storedVal;
         this.props.dispatch({
           type:"ADD_CART_VALUE_FROM_STORAGE",
           payload:storedVal
@@ -66,7 +65,7 @@ class HomeComponent extends React.Component {
   }
 
   shouldComponentUpdate(props,state){
-    console.log("props rae",props)
+    console.log("props are",props)
     if(props.cartValue !== this.props.cartValue){
       this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
     }

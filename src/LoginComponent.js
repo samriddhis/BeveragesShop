@@ -27,11 +27,31 @@ class LoginComponent extends React.Component {
     };
   }
 
+  shouldComponentUpdate(props, state) {
+    console.log("props are", props);
+     if(props.loginResponse !== this.props.loginResponse){
+      if (props.loginResponse.success === 0) {
+            console.log("unable to login");
+            Alert.alert(props.loginResponse.message);
+          } else {
+            //this.props.navigation.navigate("HomeScreen")
+            this.props.navigation.dispatch(
+              StackActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({ routeName: "DrawerNavigator" })
+                ]
+              })
+            );
+          }
+    }
+    return true
+  }
+
   _loginPress() {
     var user = this.state.userName;
     var pass = this.state.passWord;
-    this.props.dispatch(validateLogin({user,pass}))
-    console.log("hello")
+    this.props.dispatch(validateLogin({ user, pass }));
   }
 
   checkSignUp(username, password) {
@@ -218,11 +238,11 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state){
-  console.log("state of login component",state)
-  return{
-    beerList:state.cartStore.beerList
-  }
+function mapStateToProps(state) {
+  console.log("state of login component", state);
+  return {
+    loginResponse: state.cartStore.loginResponse
+  };
 }
 
-export default connect(mapStateToProps)(LoginComponent)
+export default connect(mapStateToProps)(LoginComponent);

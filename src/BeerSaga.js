@@ -1,12 +1,13 @@
 import { call,put,takeLatest } from "redux-saga/effects";
 import Api from "./Api"
-
+import { NavigationActions, StackActions } from "react-navigation";
 /**
  * action type constants
  */
 export  const GET_BEER_LIST = "GET_BEER_LIST"
 export const SAVE_BEER_LIST = "SAVE_BEER_LIST"
 export const VALIDATE_LOGIN = "VALIDATE_LOGIN"
+export const LOGIN_RESPONSE = "LOGIN_RESPONSE"
 
 /**
  * action function constants
@@ -22,9 +23,15 @@ export const saveBeerList = payload => ({
     payload
 })
 
+
 export const validateLogin = payload => ({
     type:VALIDATE_LOGIN,
     payload
+})
+
+export const loginResponse = payload => ({
+  type:LOGIN_RESPONSE,
+  payload
 })
 /**
  * this function will be forked
@@ -50,25 +57,9 @@ function* handleGetBeerList(action){
 }
 
 function* handleValidateLogin(action){
-    debugger
     try{
         const response = yield call(Api.checkLogin,action.payload)
-        debugger
-        console.log(response)
-       /* if (response.success === 0) {
-            console.log("unable to login");
-            Alert.alert(response.message);
-          } else {
-            //this.props.navigation.navigate("HomeScreen")
-            this.props.navigation.dispatch(
-              StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: "DrawerNavigator" })
-                ]
-              })
-            );
-          }*/
+        yield put(loginResponse(response))
     }catch(error){
         console.log("error is",error)
     }
