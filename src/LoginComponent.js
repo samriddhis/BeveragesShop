@@ -14,7 +14,7 @@ import {
 import { Avatar } from "react-native-elements";
 import { NavigationActions, StackActions } from "react-navigation";
 const { height, width } = Dimensions.get("window");
-import { validateLogin } from "./BeerSaga";
+import { validateLogin , signUpRegister } from "./BeerSaga";
 import { connect } from "react-redux";
 
 class LoginComponent extends React.Component {
@@ -54,46 +54,17 @@ class LoginComponent extends React.Component {
     this.props.dispatch(validateLogin({ user, pass }));
   }
 
-  checkSignUp(username, password) {
-    return new Promise(function(resolve, reject) {
-      fetch("http://192.168.1.41:3000/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password
-        })
-      })
-        .then(res => res.json().then(response => resolve(response)))
-        .catch(error => {
-          console.log("rejecting error", error);
-          reject(error);
-        });
+
+   _signupPress() {
+    var user = this.state.userName;
+    var pass = this.state.passWord;
+    this.props.dispatch(signUpRegister({user,pass}))
+    this.setState({
+      switchValue: !this.state.switchValue,
+      userName: "",
+      passWord: ""
     });
-  }
-  async _signupPress() {
-    try {
-      response = await this.checkSignUp(
-        this.state.userName,
-        this.state.passWord
-      );
-      console.log("response is", response);
-      if (response.success === 0) {
-        console.log("unable to login");
-        Alert.alert(response.message);
-      } else {
-        Alert.alert(response.message);
-        this.setState({
-          switchValue: !this.state.switchValue,
-          userName: "",
-          passWord: ""
-        });
-      }
-    } catch (error) {
-      console.log("unable to login", error);
-    }
+    
   }
 
   _toggleSwitch() {

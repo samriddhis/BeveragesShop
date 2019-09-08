@@ -15,7 +15,8 @@ class DrawerComponent extends Component {
   };
 
   _pressLogout(){
-    this.props.navigation.navigate("LoginScreen")
+   // this.navigateToScreen("LoginScreen")
+   this.props.navigation.navigate("LoginScreen")
   }
 
   render() {
@@ -32,7 +33,7 @@ class DrawerComponent extends Component {
             <Text style={styles.NavHeaderTextStyle}>Home</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.NavHeaderStyle} onPress={this.navigateToScreen("LoginScreen")}>
+          <TouchableOpacity style={styles.NavHeaderStyle} onPress={()=>this._pressLogout()}>
           <Icon type="simple-line-icon" name="login" size={20} reverseColor="red"/>
             <Text style={styles.NavHeaderTextStyle}>Login</Text>
           </TouchableOpacity>
