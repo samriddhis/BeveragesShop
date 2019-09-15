@@ -84,6 +84,15 @@ class HomeComponent extends React.Component {
     }
 
     if (props.beerList && props.beerList !== this.props.beerList) {
+      /*  var that = this;
+      for (var i = 0; i < this.props.cartValue.length; i++) {
+        var updatedList = props.beerList.map(function(item) {
+          if (item.id == that.props.cartValue[i].id) {
+            item.count = that.props.cartValue[i].count;
+          }
+          return item;
+        });
+      }*/
       this.setState({ listValue: props.beerList, isLoading: false });
     }
     return true;
@@ -110,11 +119,26 @@ class HomeComponent extends React.Component {
           />
         </View>
         <View style={styles.DetailsStyle}>
-          <Text style={styles.TextStyle}>Name : {item.name}</Text>
-          <Text style={styles.TextStyle}>ABV : {item.abv}</Text>
-          <Text style={styles.TextStyle}>IBU : {item.ibu}</Text>
-          <Text style={styles.TextStyle}>Weight : {item.ounces}</Text>
-          <Text style={styles.TextStyle}>Style : {item.style}</Text>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Name : </Text>
+            <Text style={styles.TextStyle}>{item.name}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>ABV : </Text>
+            <Text style={styles.TextStyle}>{item.abv}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>IBU : </Text>
+            <Text style={styles.TextStyle}>{item.ibu}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Weight : </Text>
+            <Text style={styles.TextStyle}>{item.ounces}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Style : </Text>
+            <Text style={styles.TextStyle}>{item.style}</Text>
+          </View>
         </View>
         <View style={styles.PlusIconViewStyle}>
           <Icon
@@ -122,6 +146,7 @@ class HomeComponent extends React.Component {
             type={"font-awesome"}
             size={20}
             style={styles.IconStyle}
+            color="#3993D5"
             onPress={() => this._deleteFromCart(item)}
           />
           <Text style={styles.countStyle}>{item.count}</Text>
@@ -130,6 +155,7 @@ class HomeComponent extends React.Component {
             type={"font-awesome"}
             size={20}
             style={styles.IconStyle}
+            color="#3993D5"
             onPress={() => this._storeInCart(item)}
           />
         </View>
@@ -190,6 +216,14 @@ const styles = StyleSheet.create({
   listViewStyle: {
     flexDirection: "row",
     backgroundColor: "#FFFFFF"
+  },
+  TextViewStyle: {
+    flexDirection: "row"
+  },
+  TitleTextStyle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "gray"
   },
   TextStyle: {
     fontSize: 16,

@@ -57,6 +57,7 @@ function* handleGetBeerList(action) {
       o.count = 0;
       return o;
     });
+   // console.log("update")
     yield put(saveBeerList(result));
   } catch (error) {
     console.log("error is", error);

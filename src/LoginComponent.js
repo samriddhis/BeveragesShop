@@ -16,6 +16,7 @@ import { NavigationActions, StackActions } from "react-navigation";
 const { height, width } = Dimensions.get("window");
 import { validateLogin , signUpRegister } from "./BeerSaga";
 import { connect } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class LoginComponent extends React.Component {
   constructor(props) {
@@ -27,6 +28,14 @@ class LoginComponent extends React.Component {
     };
   }
 
+  storeInAsyncStorage = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   shouldComponentUpdate(props, state) {
    // console.log("props are", props);
      if(props.loginResponse !== this.props.loginResponse){
@@ -34,7 +43,11 @@ class LoginComponent extends React.Component {
            // console.log("unable to login");
             Alert.alert(props.loginResponse.message);
           } else {
-            //this.props.navigation.navigate("HomeScreen")
+            var validObj = {
+              userName:this.state.userName,
+              passWord:this.state.passWord
+            }
+            this.storeInAsyncStorage("VALID_USER", JSON.stringify(validObj));
             this.props.navigation.dispatch(
               StackActions.reset({
                 index: 0,
