@@ -36,7 +36,6 @@ class CartComponent extends React.Component {
       // Error while retrieving data
     }
   };
-  
   /*_getUniqueValue() {
     console.log("hello");
     let mymap = new Map();
@@ -61,21 +60,21 @@ class CartComponent extends React.Component {
   shouldComponentUpdate(props, state) {
     if (props.cartValue !== this.props.cartValue) {
       this._updateCartValue(props.cartValue);
-      this.storeInAsyncStorage("CART_VALUE",JSON.stringify(props.cartValue) );
+      this.storeInAsyncStorage("CART_VALUE", JSON.stringify(props.cartValue));
     }
     return true;
   }
   storeInAsyncStorage = async (key, value) => {
     try {
-      console.log(`adding ${key} in cart aS`,value)
+      // console.log(`adding ${key} in cart aS`,value)
       await AsyncStorage.setItem(key, value);
     } catch (error) {
       console.log(error);
       // Error saving data
     }
   };
- 
-  deleteFromCart(item) {
+
+  _deleteFromCart(item) {
     this.props.dispatch({
       type: "DELETE_VALUE_FROM_STORE",
       payload: {
@@ -83,6 +82,15 @@ class CartComponent extends React.Component {
       }
     });
     // this.setState({ isLoading: true });
+  }
+
+  _storeInCart(item) {
+    this.props.dispatch({
+      type: "ADD_VALUE_IN_STORE",
+      payload: {
+        item
+      }
+    });
   }
   deleteFromCart1(item) {
     var updatedVal = cartVar.filter(function(element) {
@@ -95,7 +103,7 @@ class CartComponent extends React.Component {
   _updateInAsync(item) {
     cartVar = item;
     this._updateInAsyncStorage("CART_VALUE", JSON.stringify(cartVar));
-    console.log("upadted in async");
+    //console.log("upadted in async");
   }
   _updateInAsyncStorage = async (key, value) => {
     try {
@@ -113,7 +121,7 @@ class CartComponent extends React.Component {
           <Icon
             name={"md-beer"}
             type={"ionicon"}
-            size={50}
+            size={60}
             style={styles.IconStyle}
           />
         </View>
@@ -122,13 +130,21 @@ class CartComponent extends React.Component {
           <Text style={styles.TextStyle}>Weight : {item.ounces}</Text>
           <Text style={styles.TextStyle}>Style : {item.style}</Text>
         </View>
-        <View style={styles.DeleteIconViewStyle}>
+        <View style={styles.PlusIconViewStyle}>
           <Icon
-            name={"delete"}
-            type={"material-community"}
-            size={25}
+            name={"minus-circle"}
+            type={"font-awesome"}
+            size={20}
             style={styles.IconStyle}
-            onPress={() => this.deleteFromCart(item)}
+            onPress={() => this._deleteFromCart(item)}
+          />
+          <Text style={styles.countStyle}>{item.count}</Text>
+          <Icon
+            name={"plus-circle"}
+            type={"font-awesome"}
+            size={20}
+            style={styles.IconStyle}
+            onPress={() => this._storeInCart(item)}
           />
         </View>
       </View>
@@ -184,13 +200,13 @@ const styles = StyleSheet.create({
   },
   listViewStyle: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    padding: width / 20
+    backgroundColor: "#FFFFFF"
   },
   DetailsStyle: {
-    width: width / 1.5,
+    flex: 6.3,
     flexDirection: "column",
-    padding: 10
+    paddingTop: 10,
+    paddingBottom: 10
   },
   TextStyle: {
     fontSize: 16,
@@ -198,8 +214,25 @@ const styles = StyleSheet.create({
   },
   IconStyle: {},
   IconViewStyle: {
-    marginTop: 20,
-    marginLeft: 3
+    flex: 2,
+    padding: 5,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  PlusIconViewStyle: {
+    paddingRight:5,
+    paddingTop: 10,
+    flex: 1.7,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  countStyle: {
+    borderRadius: 20,
+    width: 20,
+    height: 20,
+    borderColor: "black",
+    borderWidth: 0.5,
+    textAlign: "center"
   }
 });
 

@@ -6,7 +6,7 @@ class Api{
     }
 
     getListValue(params) {
-        console.log("params in get list value",params)
+      //  console.log("params in get list value",params)
         return new Promise(function(resolve, reject) {
           try {
             fetch("http://starlord.hackerearth.com/beercraft")

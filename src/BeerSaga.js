@@ -51,12 +51,13 @@ export default function* BeerSaga() {
 function* handleGetBeerList(action) {
   try {
     const resp = yield call(Api.getListValue, action.payload);
-    console.log("response of get beer list is", resp);
+   // console.log("response of get beer list is", resp);
     var result = resp.map(function(el) {
       var o = Object.assign({}, el);
       o.count = 0;
       return o;
     });
+   // console.log("update")
     yield put(saveBeerList(result));
   } catch (error) {
     console.log("error is", error);
@@ -75,7 +76,7 @@ function* handleValidateLogin(action) {
 function* handleSignUp(action) {
   try {
     const response = yield call(Api.checkSignUp, action.payload);
-    console.log("response is", response);
+   // console.log("response is", response);
     if (response.success === 0) {
       console.log("unable to login");
       Alert.alert(response.message);

@@ -28,7 +28,7 @@ export default class HeaderComponent extends React.Component {
           onPress={() => this._openMenu()}
           style={Styles.IconViewStyle}
         >
-          <Icon name="menu" type="material-community" size={40} />
+          <Icon name="menu" type="material-community" color="#fff" size={40} />
         </TouchableOpacity>
         <View style={Styles.TitleViewStyle}>
           <Text style={Styles.TitleStyle}>{this.state.headerTitle}</Text>
@@ -42,7 +42,7 @@ const Styles = StyleSheet.create({
   OuterContainer: {
     height: height / 12,
     width: width,
-    backgroundColor: "lightgrey",
+    backgroundColor: "#0966aa",
     flexDirection: "row",
     padding: 10
   },
@@ -55,6 +55,7 @@ const Styles = StyleSheet.create({
     alignItems: "center"
   },
   TitleStyle:{
-    fontSize:25
+    fontSize:25,
+    color:"#fff"
   }
 });
