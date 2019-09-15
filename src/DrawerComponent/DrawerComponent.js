@@ -22,6 +22,7 @@ class DrawerComponent extends Component {
     this.props.navigation.navigate("LoginScreen");
   }
 
+  
   render() {
     return (
       <View style={styles.container}>
