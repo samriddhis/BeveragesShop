@@ -1,8 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import { View, Text, StyleSheet } from "react-native";
-import HeaderComponent from "./HeaderComponent"
-=======
 import {
   View,
   Text,
@@ -29,14 +25,10 @@ const OrderRoute = () => (
 const OfferRoute = () => (
   <View style={[styles.scene, { backgroundColor: "blue" }]} />
 );
->>>>>>> e9434a0a9692165f06b64d17eb1af383b21414f0
 
 export default class MyAccountComponent extends React.Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-  }
-=======
     this.state = {
       index: 0,
       routes: [
@@ -90,14 +82,10 @@ export default class MyAccountComponent extends React.Component {
     );
   };
 
->>>>>>> e9434a0a9692165f06b64d17eb1af383b21414f0
   render() {
     return (
       <View style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"My account page"} />
-<<<<<<< HEAD
-        <Text style={styles.TextStyle}>MyAccountComponent</Text>
-=======
         <View style={styles.UpperViewContainer}>
           <View style={styles.IconRoundStyle}>
             <Image
@@ -126,21 +114,11 @@ export default class MyAccountComponent extends React.Component {
             initialLayout={{ width: Dimensions.get("window").width }}
           />
         </View>
->>>>>>> e9434a0a9692165f06b64d17eb1af383b21414f0
       </View>
     );
   }
 }
 
-<<<<<<< HEAD
-
-const styles = StyleSheet.create({
-  OuterContainer: {
-    flex:1,
-  },
-  TextStyle: {
-    fontSize: 20
-=======
 const styles = StyleSheet.create({
   OuterContainer: {
     flex: 1
@@ -184,6 +162,5 @@ const styles = StyleSheet.create({
   TitleStyle:{
     fontSize:20,
     color:"#fff"
->>>>>>> e9434a0a9692165f06b64d17eb1af383b21414f0
   }
 });

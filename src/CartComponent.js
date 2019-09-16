@@ -91,6 +91,12 @@ class CartComponent extends React.Component {
         item
       }
     });
+    this.props.dispatch({
+      type: "UPDATE_VALUE_IN_LIST",
+      payload: {
+        item
+      }
+    });
   }
   deleteFromCart1(item) {
     var updatedVal = cartVar.filter(function(element) {
