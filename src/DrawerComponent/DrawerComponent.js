@@ -42,19 +42,6 @@ class DrawerComponent extends Component {
 
           <TouchableOpacity
             style={styles.NavHeaderStyle}
-            onPress={() => this._pressLogout()}
-          >
-            <Icon
-              type="simple-line-icon"
-              name="login"
-              size={20}
-              reverseColor="red"
-            />
-            <Text style={styles.NavHeaderTextStyle}>Login</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.NavHeaderStyle}
             onPress={this.navigateToScreen("MyAccScreen")}
           >
             <Icon

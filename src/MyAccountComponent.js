@@ -12,21 +12,14 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Animated from "react-native-reanimated";
 const { height, width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
-import AboutComponent from "./profile/AboutComponent"
+import ImagePicker from "react-native-image-crop-picker";
+import AboutComponent from "./profile/AboutComponent";
+import WalletComponent from "./profile/WalletComponent";
+import OrderComponent from "./profile/OrderComponent";
+import OfferComponent from "./profile/OfferComponent";
+import { connect } from "react-redux";
 
-const WalletRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "red" }]} />
-);
-
-const OrderRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "green" }]} />
-);
-
-const OfferRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "blue" }]} />
-);
-
-export default class MyAccountComponent extends React.Component {
+class MyAccountComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,13 +29,24 @@ export default class MyAccountComponent extends React.Component {
         { key: "wallet", title: "Wallet", tag: "wallet" },
         { key: "order", title: "Order", tag: "basket" },
         { key: "offer", title: "Offer", tag: "present" }
-      ]
+      ],
+      imageUrl: "http://getdrawings.com/free-icon/blank-avatar-icon-75.png"
     };
   }
 
   _handleIndexChange = index => {
     this.setState({ index });
   };
+  _pressPictureUpload() {
+    ImagePicker.openPicker({
+      width: 72,
+      height: 72,
+      cropping: true
+    }).then(image => {
+      this.setState({ imageUrl: image.path });
+      console.log(image);
+    });
+  }
 
   _renderTabBar = props => {
     const inputRange = props.navigationState.routes.map((x, i) => i);
@@ -89,25 +93,35 @@ export default class MyAccountComponent extends React.Component {
         <View style={styles.UpperViewContainer}>
           <View style={styles.IconRoundStyle}>
             <Image
-              style={{ width: 80, height: 80 }}
+              style={{ width: 72, height: 72 }}
               source={{
-                uri:
-                  "https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png"
+                uri: this.state.imageUrl
               }}
             />
           </View>
+          <TouchableOpacity style={styles.PencilOuterStyle}>
+            <View style={styles.PencilInnerStyle}>
+              <Icon
+                name={"pencil"}
+                type={"evilicon"}
+                size={18}
+                style={styles.PencilIconStyle}
+                onPress={() => this._pressPictureUpload()}
+              />
+            </View>
+          </TouchableOpacity>
           <View style={styles.TitleViewStyle}>
-          <Text style={styles.TitleStyle}>user name</Text>
-        </View>
+            <Text style={styles.TitleStyle}>user name</Text>
+          </View>
         </View>
         <View style={styles.TabViewContainer}>
           <TabView
             navigationState={this.state}
             renderScene={SceneMap({
               about: AboutComponent,
-              wallet: WalletRoute,
-              order: OrderRoute,
-              offer: OfferRoute
+              wallet: WalletComponent,
+              order: OrderComponent,
+              offer: OfferComponent
             })}
             renderTabBar={this._renderTabBar}
             onIndexChange={index => this._handleIndexChange(index)}
@@ -159,8 +173,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  TitleStyle:{
-    fontSize:20,
-    color:"#fff"
-  }
+  TitleStyle: {
+    fontSize: 20,
+    color: "#fff"
+  },
+  PencilOuterStyle: {
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: 25
+  },
+  PencilInnerStyle: {
+    width: 16,
+    height: 16,
+    borderRadius: 16,
+    backgroundColor: "#3993D5"
+  },
+  PencilIconStyle: {}
 });
+
+function mapStateToProps(state) {
+  return {
+    profileDetails: state.cartStore.profileDetails
+  };
+}
+
+export default connect(mapStateToProps)(MyAccountComponent);

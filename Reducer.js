@@ -1,10 +1,12 @@
 import { SAVE_BEER_LIST } from "./src/BeerSaga";
 import { LOGIN_RESPONSE } from "./src/BeerSaga";
+import { SAVE_PROFILE_DETAILS } from "./src/BeerSaga";
 
 const initialList = {
   cartValue: [],
   beerList: [],
-  loginResponse: {}
+  loginResponse: {},
+  profileDetails: {}
 };
 
 export const cartStore = (state = initialList, action) => {
@@ -14,7 +16,7 @@ export const cartStore = (state = initialList, action) => {
       // for cartValue
       let temp = action.payload.item;
       let temp1 = Object.assign({}, temp);
-     // let b1 = JSON.parse(JSON.stringify(temp))
+      // let b1 = JSON.parse(JSON.stringify(temp))
       let index = state.cartValue.findIndex(item => item.id === temp.id);
       let finalValue = state.cartValue.slice();
       if (index >= 0) {
@@ -23,14 +25,14 @@ export const cartStore = (state = initialList, action) => {
         temp.count = 1;
         finalValue.push(temp);
       }
-      // for beerList                        
+      // for beerList
       let index1 = state.beerList.findIndex(item => item.id === temp1.id);
       let finalValue1 = state.beerList.slice();
-    //  finalValue1[index1].count = finalValue1[index1].count + 1;
+      //  finalValue1[index1].count = finalValue1[index1].count + 1;
       return {
         ...state,
         cartValue: finalValue,
-        beerList:finalValue1
+        beerList: finalValue1
       };
     case "DELETE_VALUE_FROM_STORE":
       let removeValue = action.payload.item;
@@ -46,7 +48,7 @@ export const cartStore = (state = initialList, action) => {
           item => item.id !== action.payload.item.id
         );
       }
-     // for beerList
+      // for beerList
       let indexOfRemove1 = state.beerList.findIndex(
         item => item.id === removeValue.id
       );
@@ -54,7 +56,7 @@ export const cartStore = (state = initialList, action) => {
       return {
         ...state,
         cartValue: updateValue,
-        beerList:updateValue1
+        beerList: updateValue1
       };
     case "ADD_CART_VALUE_FROM_STORAGE":
       return {
@@ -71,6 +73,13 @@ export const cartStore = (state = initialList, action) => {
         ...state,
         loginResponse: action.payload
       };
+
+    case SAVE_PROFILE_DETAILS:
+      return {
+        ...state,
+        profileDetails: action.payload
+      };
+
     default:
       return state;
   }

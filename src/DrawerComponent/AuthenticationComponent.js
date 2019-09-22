@@ -2,8 +2,10 @@ import React from "react";
 import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationActions, StackActions } from "react-navigation";
 import AsyncStorage from "@react-native-community/async-storage";
+import { checkProfileDetails, loginResponse } from "../BeerSaga";
+import { connect } from "react-redux";
 
-export default class AuthenticationComponent extends React.Component {
+class AuthenticationComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +18,7 @@ export default class AuthenticationComponent extends React.Component {
   }
 
   getFromAsyncStorage = async key => {
+    var that = this;
     try {
       const validUser = await AsyncStorage.getItem(key);
       const validVal = JSON.parse(validUser);
@@ -23,6 +26,14 @@ export default class AuthenticationComponent extends React.Component {
         this.props.navigation.navigate("LoginScreen");
         this.setState({ authLoader: false });
       } else if (validVal.userName != null && validVal.passWord) {
+        user = validVal.userName;
+        loginDetails = {
+          user: user,
+          pass: validVal.passWord
+        };
+        pass = validVal.passWord;
+        this.props.dispatch(loginResponse(loginDetails));
+        this.props.dispatch(checkProfileDetails({ user }));
         this.setState({ authLoader: false });
         this.props.navigation.dispatch(
           StackActions.reset({
@@ -69,3 +80,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+function mapStateToProps(state) {
+  //  console.log("state of login component", state);
+  return {
+    profileDetails: state.cartStore.profileDetails
+  };
+}
+
+export default connect(mapStateToProps)(AuthenticationComponent);
