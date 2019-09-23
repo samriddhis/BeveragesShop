@@ -122,7 +122,8 @@ function* handleCheckProfile(action) {
 function* handleUpdateProfile(action) {
   try {
     const response = yield call(Api.handleUpdateProfile, action.payload);
-    console.log(response);
+    alert(response.message);
+    // console.log(response);
   } catch (error) {
     console.log("error is", error);
   }

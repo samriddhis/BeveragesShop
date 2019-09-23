@@ -4,6 +4,7 @@ import styles from "./Component.style";
 import { NavigationActions, DrawerActions } from "react-navigation";
 import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
+import { connect } from "react-redux";
 
 class DrawerComponent extends Component {
   constructor(props) {
@@ -21,15 +22,25 @@ class DrawerComponent extends Component {
     // this.navigateToScreen("LoginScreen")
     this.props.navigation.navigate("LoginScreen");
   }
-
-  
+  isEmpty(val) {
+    if (val == "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity style={styles.ProfilePicStyle}>
             <Icon type="font-awesome" name="user-circle-o" size={20} />
-            <Text style={styles.ProfileTextStyle}>Profile</Text>
+            <Text style={styles.ProfileTextStyle}>
+              Hello,{" "}
+              {typeof this.props.profileDetails.name === "undefined"
+                ? "Profile"
+                : this.props.profileDetails.name}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -77,4 +88,10 @@ DrawerComponent.propTypes = {
   navigation: PropTypes.object
 };
 
-export default DrawerComponent;
+function mapStateToProps(state) {
+  return {
+    profileDetails: state.cartStore.profileDetails
+  };
+}
+
+export default connect(mapStateToProps)(DrawerComponent);

@@ -10,6 +10,7 @@ import CartComponent from "./src/CartComponent";
 import LogoutComponent from "./src/LogoutComponent";
 import DrawerComponent from "./src/DrawerComponent/DrawerComponent";
 import AuthenticationComponent from "./src/DrawerComponent/AuthenticationComponent";
+import ListDetailComponent from "./src/ListDetailComponent";
 import HeaderComponent from "./src/HeaderComponent";
 
 const drawerNav = createDrawerNavigator(
@@ -28,9 +29,10 @@ const drawerNav = createDrawerNavigator(
 
 const stackNav = createStackNavigator(
   {
-    AuthScreen:AuthenticationComponent,
+    AuthScreen: AuthenticationComponent,
     LoginScreen: LoginComponent,
-    DrawerNavigator: drawerNav
+    DrawerNavigator: drawerNav,
+    ListDetailScreen: ListDetailComponent
   },
   {
     initialRouteName: "AuthScreen",

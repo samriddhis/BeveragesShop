@@ -6,6 +6,7 @@ import {
   FlatList,
   Dimensions,
   ActivityIndicator,
+  TouchableOpacity,
   Image
 } from "react-native";
 import HeaderComponent from "./HeaderComponent";
@@ -15,7 +16,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import InputSpinner from "react-native-number-spinner";
 import { connect } from "react-redux";
 import ShimmerComponent from "./ShimmerComponent";
-import { getBeerList } from "./BeerSaga";
+import { getBeerList, checkProfileDetails } from "./BeerSaga";
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class HomeComponent extends React.Component {
     navVar = this.props.navigation;
   }
   componentDidMount() {
+    user = this.props.loginResponse.user;
+    this.props.dispatch(checkProfileDetails({ user }));
     this.getStoredCartValue("CART_VALUE");
     if (this.props.beerList <= 0) {
       this.props.dispatch(getBeerList({}));
@@ -107,15 +110,23 @@ class HomeComponent extends React.Component {
     }
   };
 
+  _pressListItems(item) {
+    this.props.navigation.navigate("ListDetailScreen", {
+      scope: this,
+      item: item
+    });
+  }
+
   _renderItem = ({ item, index }) => {
     return (
-      <View style={styles.listViewStyle}>
+      <TouchableOpacity
+        style={styles.listViewStyle}
+        onPress={() => this._pressListItems(item)}
+      >
         <View style={styles.IconViewStyle}>
-          <Icon
-            name={"md-beer"}
-            type={"ionicon"}
-            size={75}
-            style={styles.IconStyle}
+          <Image
+            style={{ width: 72, height: 90, borderRadius: 10 }}
+            source={{ uri: item.image }}
           />
         </View>
         <View style={styles.DetailsStyle}>
@@ -159,7 +170,7 @@ class HomeComponent extends React.Component {
             onPress={() => this._storeInCart(item)}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   render() {
@@ -195,13 +206,10 @@ const styles = StyleSheet.create({
   },
   ListOuterContainer: {},
   FlatListStyle: {},
-  TextStyle: {
-    fontSize: 20
-  },
   separator: {
     width: width,
-    height: height / 50,
-    backgroundColor: "#C0C0C0"
+    height: 5,
+    backgroundColor: "#D3D3D3"
   },
   indicatorViewStyle: {
     flex: 1,
@@ -221,13 +229,13 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   TitleTextStyle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "gray"
   },
   TextStyle: {
-    fontSize: 16,
-    fontWeight: "bold"
+    fontSize: 14,
+    fontWeight: "100"
   },
   IconStyle: {},
   countStyle: {
@@ -240,6 +248,7 @@ const styles = StyleSheet.create({
   },
   IconViewStyle: {
     flex: 2,
+    marginLeft: 10,
     padding: 5,
     justifyContent: "center",
     alignItems: "center"
@@ -248,7 +257,8 @@ const styles = StyleSheet.create({
     flex: 6.3,
     flexDirection: "column",
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    marginLeft: 10
   },
   PlusIconViewStyle: {
     paddingRight: 5,
@@ -263,7 +273,8 @@ function mapStateToProps(state) {
   // console.log("state is",state)
   return {
     cartValue: state.cartStore.cartValue,
-    beerList: state.cartStore.beerList
+    beerList: state.cartStore.beerList,
+    loginResponse: state.cartStore.loginResponse
   };
 }
 

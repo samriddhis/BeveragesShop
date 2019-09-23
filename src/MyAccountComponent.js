@@ -93,7 +93,7 @@ class MyAccountComponent extends React.Component {
         <View style={styles.UpperViewContainer}>
           <View style={styles.IconRoundStyle}>
             <Image
-              style={{ width: 72, height: 72 }}
+              style={{ width: 72, height: 72, borderRadius:72 }}
               source={{
                 uri: this.state.imageUrl
               }}
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 25
+    top: height/50
   },
   PencilInnerStyle: {
     width: 16,

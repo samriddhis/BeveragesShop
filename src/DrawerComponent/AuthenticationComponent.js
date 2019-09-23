@@ -33,7 +33,6 @@ class AuthenticationComponent extends React.Component {
         };
         pass = validVal.passWord;
         this.props.dispatch(loginResponse(loginDetails));
-        this.props.dispatch(checkProfileDetails({ user }));
         this.setState({ authLoader: false });
         this.props.navigation.dispatch(
           StackActions.reset({

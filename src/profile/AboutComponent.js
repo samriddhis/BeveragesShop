@@ -40,19 +40,27 @@ class AboutComponent extends React.Component {
       <ScrollView style={[styles.scene, { backgroundColor: "lightgray" }]}>
         <View style={styles.OuterViewContainer}>
           <View style={styles.BasicInfoViewStyle}>
-            <Text style={styles.BasicInfoTxtStyle}>Basic Info</Text>
+            <Text style={styles.BasicInfoStyle}>Basic Info</Text>
           </View>
           <View style={styles.InfoViewStyle}>
             <Icon name="user" type="simple-line-icon" color="gray" size={16} />
             <Text style={styles.InfoTxtStyle}>First Name:</Text>
-            <TextInput style={styles.BasicInfoTxtStyle} placeholder="Name">
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Name"
+              onChangeText={text => this.setState({ name: text })}
+            >
               {this.state.name}
             </TextInput>
           </View>
           <View style={styles.InfoViewStyle}>
             <Icon name="user" type="simple-line-icon" color="gray" size={16} />
             <Text style={styles.InfoTxtStyle}>Last name:</Text>
-            <TextInput style={styles.BasicInfoTxtStyle} placeholder="Name">
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Name"
+              onChangeText={text => this.setState({ name: text })}
+            >
               {this.state.name}
             </TextInput>
           </View>
@@ -64,7 +72,11 @@ class AboutComponent extends React.Component {
               size={18}
             />
             <Text style={styles.InfoTxtStyle}>Email:</Text>
-            <TextInput style={styles.BasicInfoTxtStyle} placeholder="Email">
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Email"
+              onChangeText={text => this.setState({ emailId: text })}
+            >
               {this.state.emailId}
             </TextInput>
           </View>
@@ -76,25 +88,33 @@ class AboutComponent extends React.Component {
               size={16}
             />
             <Text style={styles.InfoTxtStyle}>DOB:</Text>
-            <TextInput style={styles.BasicInfoTxtStyle} placeholder="Dob">
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Dob"
+              onChangeText={text => this.setState({ dob: text })}
+            >
               {this.state.dob}
             </TextInput>
           </View>
           <View style={styles.InfoViewStyle}>
             <Icon name="mobile" type="font-awesome" color="gray" size={22} />
-            <Text style={styles.InfoTxtStyle} placeholder="Number">
-              Mobile Number:
-            </Text>
-            <TextInput style={styles.BasicInfoTxtStyle}>
+            <Text style={styles.InfoTxtStyle}>Mobile Number:</Text>
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Number"
+              onChangeText={text => this.setState({ contact: text })}
+            >
               {this.state.contact}
             </TextInput>
           </View>
           <View style={styles.InfoViewStyle}>
             <Icon name="home" type="simple-line-icon" color="gray" size={16} />
-            <Text style={styles.InfoTxtStyle} placeholder="Address">
-              Address:
-            </Text>
-            <TextInput style={styles.BasicInfoTxtStyle}>
+            <Text style={styles.InfoTxtStyle}>Address:</Text>
+            <TextInput
+              style={styles.BasicInfoTxtStyle}
+              placeholder="Address"
+              onChangeText={text => this.setState({ address: text })}
+            >
               {this.state.address}
             </TextInput>
           </View>
@@ -118,7 +138,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderColor: "silver",
-    height: 500
+    height: 400
   },
   BasicInfoViewStyle: {
     borderBottomColor: "silver",
@@ -132,19 +152,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  BasicInfoTxtStyle: {
+  BasicInfoStyle: {
     color: "#000",
     padding: 5,
     fontSize: 16,
     fontWeight: "bold"
   },
+  BasicInfoTxtStyle: {
+    color: "#000",
+    padding: 3,
+    fontSize: 14,
+    fontWeight: "bold"
+  },
   InfoTxtStyle: {
     color: "gray",
-    padding: 3,
-    fontSize: 16
+    padding: 1,
+    fontSize: 14
   },
   SaveButtonStyle: {
-    marginTop: 150
+    marginTop: 80
   }
 });
 
