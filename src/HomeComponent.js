@@ -87,15 +87,19 @@ class HomeComponent extends React.Component {
     }
 
     if (props.beerList && props.beerList !== this.props.beerList) {
-      /*  var that = this;
-      for (var i = 0; i < this.props.cartValue.length; i++) {
-        var updatedList = props.beerList.map(function(item) {
-          if (item.id == that.props.cartValue[i].id) {
-            item.count = that.props.cartValue[i].count;
-          }
-          return item;
-        });
-      }*/
+      var that = this;
+      if (this.props.cartValue.length == 0) {
+        updatedList = props.beerList;
+      } else {
+        for (var i = 0; i < this.props.cartValue.length; i++) {
+          updatedList = props.beerList.map(function(item) {
+            if (item.id == that.props.cartValue[i].id) {
+              item.count = that.props.cartValue[i].count;
+            }
+            return item;
+          });
+        }
+      }
       this.setState({ listValue: props.beerList, isLoading: false });
     }
     return true;
@@ -189,6 +193,7 @@ class HomeComponent extends React.Component {
         ) : (
           <FlatList
             style={styles.FlatListStyle}
+            contentContainerStyle={styles.FlatListContainerStyle}
             data={this.state.listValue}
             keyExtractor={(item, index) => index.toString()}
             renderItem={this._renderItem}
@@ -206,6 +211,12 @@ const styles = StyleSheet.create({
   },
   ListOuterContainer: {},
   FlatListStyle: {},
+  FlatListContainerStyle: {
+    width: width,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#D3D3D3"
+  },
   separator: {
     width: width,
     height: 5,
@@ -224,6 +235,7 @@ const styles = StyleSheet.create({
   listViewStyle: {
     flexDirection: "row",
     backgroundColor: "#FFFFFF"
+    //  width: width / 1.05
   },
   TextViewStyle: {
     flexDirection: "row"
