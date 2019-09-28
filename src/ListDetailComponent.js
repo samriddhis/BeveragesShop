@@ -193,7 +193,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    loginResponse: state.cartStore.loginResponse
+    loginResponse: state.cartStore.loginResponse,
+    beerList: state.cartStore.beerList
   };
 }
 
