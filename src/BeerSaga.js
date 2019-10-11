@@ -7,6 +7,7 @@ import { NavigationActions, StackActions } from "react-navigation";
 export const GET_BEER_LIST = "GET_BEER_LIST";
 export const SAVE_BEER_LIST = "SAVE_BEER_LIST";
 export const VALIDATE_LOGIN = "VALIDATE_LOGIN";
+export const LOGIN_STATUS = "LOGIN_STATUS";
 export const LOGIN_RESPONSE = "LOGIN_RESPONSE";
 export const SIGNUP_REGISTER = "SIGNUP_REGISTER";
 export const CHECK_PROFILE_DETAILS = "CHECK_PROFILE_DETAILS";
@@ -29,6 +30,11 @@ export const saveBeerList = payload => ({
 
 export const validateLogin = payload => ({
   type: VALIDATE_LOGIN,
+  payload
+});
+
+export const loginStatus = payload => ({
+  type: LOGIN_STATUS,
   payload
 });
 
@@ -89,6 +95,7 @@ function* handleGetBeerList(action) {
 function* handleValidateLogin(action) {
   try {
     const response = yield call(Api.checkLogin, action.payload);
+    yield put(loginStatus(response));
     yield put(loginResponse(action.payload));
   } catch (error) {
     console.log("error is", error);

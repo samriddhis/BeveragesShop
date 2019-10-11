@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  ScrollView,
   TouchableOpacity
 } from "react-native";
 import HeaderComponent from "./HeaderComponent";
@@ -93,7 +94,7 @@ class MyAccountComponent extends React.Component {
         <View style={styles.UpperViewContainer}>
           <View style={styles.IconRoundStyle}>
             <Image
-              style={{ width: 72, height: 72, borderRadius:72 }}
+              style={{ width: 72, height: 72, borderRadius: 72 }}
               source={{
                 uri: this.state.imageUrl
               }}
@@ -114,7 +115,7 @@ class MyAccountComponent extends React.Component {
             <Text style={styles.TitleStyle}>user name</Text>
           </View>
         </View>
-        <View style={styles.TabViewContainer}>
+        <ScrollView style={styles.TabViewContainer}>
           <TabView
             navigationState={this.state}
             renderScene={SceneMap({
@@ -127,7 +128,7 @@ class MyAccountComponent extends React.Component {
             onIndexChange={index => this._handleIndexChange(index)}
             initialLayout={{ width: Dimensions.get("window").width }}
           />
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: height/50
+    top: height / 50
   },
   PencilInnerStyle: {
     width: 16,

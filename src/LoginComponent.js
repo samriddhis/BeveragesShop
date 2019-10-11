@@ -14,7 +14,7 @@ import {
 import { Avatar } from "react-native-elements";
 import { NavigationActions, StackActions } from "react-navigation";
 const { height, width } = Dimensions.get("window");
-import { validateLogin , signUpRegister } from "./BeerSaga";
+import { validateLogin, signUpRegister } from "./BeerSaga";
 import { connect } from "react-redux";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -37,28 +37,28 @@ class LoginComponent extends React.Component {
   };
 
   shouldComponentUpdate(props, state) {
-   // console.log("props are", props);
-     if(props.loginResponse !== this.props.loginResponse){
-      if (props.loginResponse.success === 0) {
-           // console.log("unable to login");
-            Alert.alert(props.loginResponse.message);
-          } else {
-            var validObj = {
-              userName:this.state.userName,
-              passWord:this.state.passWord
-            }
-            this.storeInAsyncStorage("VALID_USER", JSON.stringify(validObj));
-            this.props.navigation.dispatch(
-              StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({ routeName: "DrawerNavigator" })
-                ]
-              })
-            );
-          }
+    // console.log("props are", props);
+    if (props.loginStatus !== this.props.loginStatus) {
+      if (props.loginStatus.success === 0) {
+        // console.log("unable to login");
+        Alert.alert(props.loginStatus.message);
+      } else {
+        var validObj = {
+          userName: this.state.userName,
+          passWord: this.state.passWord
+        };
+        this.storeInAsyncStorage("VALID_USER", JSON.stringify(validObj));
+        this.props.navigation.dispatch(
+          StackActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: "DrawerNavigator" })
+            ]
+          })
+        );
+      }
     }
-    return true
+    return true;
   }
 
   _loginPress() {
@@ -67,17 +67,15 @@ class LoginComponent extends React.Component {
     this.props.dispatch(validateLogin({ user, pass }));
   }
 
-
-   _signupPress() {
+  _signupPress() {
     var user = this.state.userName;
     var pass = this.state.passWord;
-    this.props.dispatch(signUpRegister({user,pass}))
+    this.props.dispatch(signUpRegister({ user, pass }));
     this.setState({
       switchValue: !this.state.switchValue,
       userName: "",
       passWord: ""
     });
-    
   }
 
   _toggleSwitch() {
@@ -223,9 +221,9 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-//  console.log("state of login component", state);
+  //  console.log("state of login component", state);
   return {
-    loginResponse: state.cartStore.loginResponse
+    loginStatus: state.cartStore.loginStatus
   };
 }
 

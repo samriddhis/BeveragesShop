@@ -1,12 +1,16 @@
-import { SAVE_BEER_LIST } from "./src/BeerSaga";
-import { LOGIN_RESPONSE } from "./src/BeerSaga";
-import { SAVE_PROFILE_DETAILS } from "./src/BeerSaga";
+import {
+  SAVE_BEER_LIST,
+  LOGIN_RESPONSE,
+  LOGIN_STATUS,
+  SAVE_PROFILE_DETAILS
+} from "./src/BeerSaga";
 
 const initialList = {
   cartValue: [],
   beerList: [],
   loginResponse: {},
-  profileDetails: {}
+  profileDetails: {},
+  loginStatus: {}
 };
 
 export const cartStore = (state = initialList, action) => {
@@ -68,6 +72,13 @@ export const cartStore = (state = initialList, action) => {
         ...state,
         beerList: action.payload
       };
+
+    case LOGIN_STATUS:
+      return {
+        ...state,
+        loginStatus: action.payload
+      };
+
     case LOGIN_RESPONSE:
       return {
         ...state,

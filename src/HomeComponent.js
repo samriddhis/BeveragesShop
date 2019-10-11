@@ -7,7 +7,8 @@ import {
   Dimensions,
   ActivityIndicator,
   TouchableOpacity,
-  Image
+  Image,
+  SafeAreaView
 } from "react-native";
 import HeaderComponent from "./HeaderComponent";
 const { height, width } = Dimensions.get("window");
@@ -121,6 +122,10 @@ class HomeComponent extends React.Component {
     });
   }
 
+  _pressFilter() {
+    console.log("filter");
+  }
+
   _renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -179,7 +184,7 @@ class HomeComponent extends React.Component {
   };
   render() {
     return (
-      <View style={styles.OuterContainer}>
+      <SafeAreaView style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"Home page"} />
         {this.state.isLoading ? (
           /*  <View style={styles.indicatorViewStyle}>
@@ -191,16 +196,29 @@ class HomeComponent extends React.Component {
           </View>*/
           <ShimmerComponent />
         ) : (
-          <FlatList
-            style={styles.FlatListStyle}
-            contentContainerStyle={styles.FlatListContainerStyle}
-            data={this.state.listValue}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={this._renderItem}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
+          <SafeAreaView>
+            <FlatList
+              style={styles.FlatListStyle}
+              contentContainerStyle={styles.FlatListContainerStyle}
+              data={this.state.listValue}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={this._renderItem}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+            />
+            <TouchableOpacity
+              onPress={() => this._pressFilter()}
+              style={styles.filterViewStyle}
+            >
+              <Icon
+                name={"filter"}
+                type={"antdesign"}
+                size={26}
+                color="white"
+              />
+            </TouchableOpacity>
+          </SafeAreaView>
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -278,6 +296,17 @@ const styles = StyleSheet.create({
     flex: 1.7,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  filterViewStyle: {
+    width: 60,
+    height: 60,
+    borderRadius: 60,
+    bottom: 60,
+    right: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0966aa",
+    position: "absolute"
   }
 });
 

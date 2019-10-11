@@ -5,7 +5,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   Dimensions,
-  FlatList
+  FlatList,
+  Image
 } from "react-native";
 import HeaderComponent from "./HeaderComponent";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -170,13 +171,22 @@ class CartComponent extends React.Component {
             />
           </View>
         ) : (
-          <FlatList
-            style={styles.FlatListStyle}
-            data={this.state.cartValueArr}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={this._renderItem}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
+          <View>
+            {this.state.cartValueArr.length > 0 ? (
+              <FlatList
+                style={styles.FlatListStyle}
+                data={this.state.cartValueArr}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={this._renderItem}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+              />
+            ) : (
+              <Image
+                style={{ width: width, height: height }}
+                source={require("../images/emptycart1.png")}
+              />
+            )}
+          </View>
         )}
       </View>
     );
@@ -226,7 +236,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   PlusIconViewStyle: {
-    paddingRight:5,
+    paddingRight: 5,
     paddingTop: 10,
     flex: 1.7,
     flexDirection: "row",

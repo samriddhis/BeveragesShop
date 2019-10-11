@@ -37,7 +37,9 @@ class DrawerComponent extends Component {
             <Icon type="font-awesome" name="user-circle-o" size={20} />
             <Text style={styles.ProfileTextStyle}>
               Hello,{" "}
-              {typeof this.props.profileDetails.name === "undefined"
+              {this.props.profileDetails === null
+                ? "Profile"
+                : this.props.profileDetails.name === "undefined"
                 ? "Profile"
                 : this.props.profileDetails.name}
             </Text>
