@@ -10,7 +10,8 @@ const initialList = {
   beerList: [],
   loginResponse: {},
   profileDetails: {},
-  loginStatus: {}
+  loginStatus: {},
+  filterData: []
 };
 
 export const cartStore = (state = initialList, action) => {
@@ -91,6 +92,11 @@ export const cartStore = (state = initialList, action) => {
         profileDetails: action.payload
       };
 
+    case "FILTER_OPTION_APPLIED":
+      return {
+        ...state,
+        filterData: action.payload
+      };
     default:
       return state;
   }

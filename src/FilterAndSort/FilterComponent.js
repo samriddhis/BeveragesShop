@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Slider from "react-native-slider";
+import { connect } from "react-redux";
 const { width, height } = Dimensions.get("window");
 
-export default class FilterComponent extends React.Component {
+class FilterComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -129,12 +130,42 @@ export default class FilterComponent extends React.Component {
       ]
     };
   }
+  componentDidMount() {
+    var that = this;
+    selectedArr = this.state.StyleList.map(function(itemVal) {
+      presentVal = false;
+      that.props.filterData.forEach(function(item) {
+        if (itemVal.name === item.name) {
+          itemVal.selected = true;
+        }
+      });
+      return itemVal;
+    });
+    this.setState({
+      StyleList: selectedArr
+    });
+    console.log("update list in");
+  }
+
+  shouldComponentUpdate(props, state) {
+    if (props.filterData !== this.props.filterData) {
+      console.log("update list");
+    }
+    return true;
+  }
 
   _closeFilter() {
     this.props.navigation.goBack();
   }
   _applyFilter() {
     console.log("Filter Applied");
+    var filterData = this.state.StyleList.filter(function(item) {
+      return item.selected == true;
+    });
+    this.props.dispatch({
+      type: "FILTER_OPTION_APPLIED",
+      payload: filterData
+    });
     this.props.navigation.goBack();
   }
 
@@ -170,7 +201,12 @@ export default class FilterComponent extends React.Component {
   }
 
   _clearAllPressed() {
-    console.log("clear all");
+    filterData = [];
+    this.props.dispatch({
+      type: "FILTER_OPTION_APPLIED",
+      payload: filterData
+    });
+    this.props.navigation.goBack();
   }
 
   _renderItem = ({ item, index }) => {
@@ -374,3 +410,11 @@ const Styles = StyleSheet.create({
     // height:height
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    filterData: state.cartStore.filterData
+  };
+}
+
+export default connect(mapStateToProps)(FilterComponent);

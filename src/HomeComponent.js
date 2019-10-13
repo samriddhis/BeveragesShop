@@ -102,6 +102,28 @@ class HomeComponent extends React.Component {
       }
       this.setState({ listValue: props.beerList, isLoading: false });
     }
+
+    if (props.filterData !== this.props.filterData) {
+      var that = this;
+      listArray = props.beerList;
+      if (props.filterData.length > 0) {
+        updatedList = listArray.filter(function(itemVal) {
+          presentVal = false;
+          props.filterData.forEach(function(item) {
+            if (itemVal.style === item.name) {
+              presentVal = true;
+            }
+          });
+          return presentVal === true;
+        });
+      } else {
+        updatedList = listArray;
+      }
+
+      this.setState({
+        listValue: updatedList
+      });
+    }
     return true;
   }
   storeInAsyncStorage = async (key, value) => {
@@ -314,7 +336,8 @@ function mapStateToProps(state) {
   return {
     cartValue: state.cartStore.cartValue,
     beerList: state.cartStore.beerList,
-    loginResponse: state.cartStore.loginResponse
+    loginResponse: state.cartStore.loginResponse,
+    filterData: state.cartStore.filterData
   };
 }
 
