@@ -10,7 +10,7 @@ export const VALIDATE_LOGIN = "VALIDATE_LOGIN";
 export const LOGIN_STATUS = "LOGIN_STATUS";
 export const LOGIN_RESPONSE = "LOGIN_RESPONSE";
 export const SIGNUP_REGISTER = "SIGNUP_REGISTER";
-export const CHECK_PROFILE_DETAILS = "CHECK_PROFILE_DETAILS";
+export const GET_PROFILE_DETAILS = "GET_PROFILE_DETAILS";
 export const SAVE_PROFILE_DETAILS = "SAVE_PROFILE_DETAILS";
 export const UPDATE_PROFILE_DETAILS = "UPDATE_PROFILE_DETAILS";
 
@@ -48,8 +48,8 @@ export const signUpRegister = payload => ({
   payload
 });
 
-export const checkProfileDetails = payload => ({
-  type: CHECK_PROFILE_DETAILS,
+export const GetProfileDetails = payload => ({
+  type: GET_PROFILE_DETAILS,
   payload
 });
 
@@ -68,7 +68,7 @@ export const updateProfile = payload => ({
  */
 export default function* BeerSaga() {
   yield takeLatest(UPDATE_PROFILE_DETAILS, handleUpdateProfile);
-  yield takeLatest(CHECK_PROFILE_DETAILS, handleCheckProfile);
+  yield takeLatest(GET_PROFILE_DETAILS, handleGetProfile);
   yield takeLatest(VALIDATE_LOGIN, handleValidateLogin);
   yield takeLatest(GET_BEER_LIST, handleGetBeerList);
   yield takeLatest(SIGNUP_REGISTER, handleSignUp);
@@ -117,9 +117,9 @@ function* handleSignUp(action) {
   }
 }
 
-function* handleCheckProfile(action) {
+function* handleGetProfile(action) {
   try {
-    const response = yield call(Api.handleCheckProfile, action.payload);
+    const response = yield call(Api.handleGetProfile, action.payload);
     yield put(saveProfileDetails(response.data));
   } catch (error) {
     console.log("error is", error);

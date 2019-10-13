@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationActions, StackActions } from "react-navigation";
 import AsyncStorage from "@react-native-community/async-storage";
-import { checkProfileDetails, loginResponse } from "../BeerSaga";
+import { GetProfileDetails, loginResponse } from "../BeerSaga";
 import { connect } from "react-redux";
 
 class AuthenticationComponent extends React.Component {

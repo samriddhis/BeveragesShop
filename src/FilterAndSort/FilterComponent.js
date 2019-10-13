@@ -233,9 +233,9 @@ class FilterComponent extends React.Component {
     return (
       <View style={Styles.OuterContainer}>
         <View style={Styles.HeaderOuterContainer}>
-          <TouchableOpacity style={Styles.TitleViewStyle}>
+          <View style={Styles.TitleViewStyle}>
             <Text style={Styles.TitleStyle}>Filters</Text>
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={Styles.TitleViewStyle}
             onPress={() => this._clearAllPressed()}

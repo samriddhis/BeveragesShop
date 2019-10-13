@@ -20,6 +20,7 @@ import OrderComponent from "./profile/OrderComponent";
 import OfferComponent from "./profile/OfferComponent";
 import { connect } from "react-redux";
 import Api from "./Api/index";
+import { updateProfile } from "./BeerSaga";
 
 const options = {
   title: "Select Avatar",
@@ -43,6 +44,13 @@ class MyAccountComponent extends React.Component {
       imageUrl: "http://getdrawings.com/free-icon/blank-avatar-icon-75.png"
     };
   }
+  componentDidMount() {
+    if (this.props.profileDetails.url) {
+      this.setState({
+        imageUrl: this.props.profileDetails.url
+      });
+    }
+  }
 
   _handleIndexChange = index => {
     this.setState({ index });
@@ -53,10 +61,15 @@ class MyAccountComponent extends React.Component {
       const resp = await Api.uploadImage({
         image: response
       });
+      updateObj = {
+        username: this.props.loginResponse.user,
+        url: resp.secure_url
+      };
+      this.props.dispatch(updateProfile({ updateObj }));
       this.setState({ imageUrl: resp.secure_url });
       console.log("response of file upload is", resp);
     } catch (error) {
-      console.log("error s", error);
+      console.log("error is", error);
     }
   }
 
@@ -150,7 +163,7 @@ class MyAccountComponent extends React.Component {
           <TabView
             navigationState={this.state}
             renderScene={SceneMap({
-              about: () => <AboutComponent imageUrl={this.state.imageUrl}/>,
+              about: () => <AboutComponent imageUrl={this.state.imageUrl} />,
               wallet: WalletComponent,
               order: OrderComponent,
               offer: OfferComponent
@@ -230,7 +243,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    profileDetails: state.cartStore.profileDetails
+    profileDetails: state.cartStore.profileDetails,
+    loginResponse: state.cartStore.loginResponse
   };
 }
 

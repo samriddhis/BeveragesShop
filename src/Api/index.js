@@ -62,7 +62,7 @@ class Api {
         });
     });
   }
-  handleCheckProfile(params) {
+  handleGetProfile(params) {
     profileUrl = "http://192.168.1.41:7000/users/get_profile/" + params.user;
     return new Promise(function(resolve, reject) {
       try {

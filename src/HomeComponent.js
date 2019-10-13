@@ -16,7 +16,7 @@ import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
 import { connect } from "react-redux";
 import ShimmerComponent from "./ShimmerComponent";
-import { getBeerList, checkProfileDetails } from "./BeerSaga";
+import { getBeerList, GetProfileDetails } from "./BeerSaga";
 
 class HomeComponent extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class HomeComponent extends React.Component {
   }
   componentDidMount() {
     user = this.props.loginResponse.user;
-    this.props.dispatch(checkProfileDetails({ user }));
+    this.props.dispatch(GetProfileDetails({ user }));
     this.getStoredCartValue("CART_VALUE");
     if (this.props.beerList <= 0) {
       this.props.dispatch(getBeerList({}));
