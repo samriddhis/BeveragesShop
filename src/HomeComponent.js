@@ -14,7 +14,6 @@ import HeaderComponent from "./HeaderComponent";
 const { height, width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
 import AsyncStorage from "@react-native-community/async-storage";
-import InputSpinner from "react-native-number-spinner";
 import { connect } from "react-redux";
 import ShimmerComponent from "./ShimmerComponent";
 import { getBeerList, checkProfileDetails } from "./BeerSaga";
@@ -123,7 +122,7 @@ class HomeComponent extends React.Component {
   }
 
   _pressFilter() {
-    console.log("filter");
+    this.props.navigation.navigate("FilterScreen");
   }
 
   _renderItem = ({ item, index }) => {

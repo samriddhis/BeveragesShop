@@ -172,18 +172,19 @@ class CartComponent extends React.Component {
           </View>
         ) : (
           <View>
-            {this.state.cartValueArr.length > 0 ? (
+            {this.state.cartValueArr == null ||
+            this.state.cartValueArr.length <= 0 ? (
+              <Image
+                style={{ width: width, height: height }}
+                source={require("../images/emptycart1.png")}
+              />
+            ) : (
               <FlatList
                 style={styles.FlatListStyle}
                 data={this.state.cartValueArr}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={this._renderItem}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
-              />
-            ) : (
-              <Image
-                style={{ width: width, height: height }}
-                source={require("../images/emptycart1.png")}
               />
             )}
           </View>

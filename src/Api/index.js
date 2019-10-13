@@ -98,6 +98,38 @@ class Api {
         });
     });
   }
+  uploadImage(params) {
+    let data = new FormData();
+    data.append("file", {
+      name: "image",
+      type: Platform.OS === "android" ? "image/mp4" : "image/mov",
+      uri:
+        Platform.OS === "android"
+          ? params.image.uri
+          : params.image.uri.replace("file://", "")
+    });
+    data.append("upload_preset", "csho8gae");
+    return new Promise(function(resolve, reject) {
+      try {
+        fetch("https://api.cloudinary.com/v1_1/ddxz5smac/image/upload", {
+          method: "POST",
+          body: data
+        })
+          .then(response => {
+            response
+              .json()
+              .then(res => {
+                console.log("response is", res);
+                resolve(res);
+              })
+              .catch(error => reject(error));
+          })
+          .catch(error => reject(error));
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
 
 export default new Api();

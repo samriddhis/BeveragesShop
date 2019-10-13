@@ -8,28 +8,43 @@ import {
 } from "react-native";
 const { width, height } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
-import {DrawerActions} from "react-navigation"
+import { DrawerActions } from "react-navigation";
 
 export default class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      headerTitle: this.props.headerTitle
+      headerTitle: this.props.headerTitle,
+      withBack: this.props.withBack
     };
   }
   _openMenu() {
     navVar.openDrawer();
     //this.state.scope.props.navigation.openDrawer();
   }
+  _closeFilter() {
+    console.log("goback");
+    navVar.goBack()
+  }
   render() {
     return (
       <View style={Styles.OuterContainer}>
-        <TouchableOpacity
-          onPress={() => this._openMenu()}
-          style={Styles.IconViewStyle}
-        >
-          <Icon name="ios-menu" type="ionicon" color="#fff" size={35} />
-        </TouchableOpacity>
+        {this.state.withBack ? (
+          <TouchableOpacity
+            onPress={() => this._closeFilter()}
+            style={Styles.IconViewStyle}
+          >
+            <Icon name="arrow-back" type="material" color="#fff" size={35} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() => this._openMenu()}
+            style={Styles.IconViewStyle}
+          >
+            <Icon name="ios-menu" type="ionicon" color="#fff" size={35} />
+          </TouchableOpacity>
+        )}
+
         <View style={Styles.TitleViewStyle}>
           <Text style={Styles.TitleStyle}>{this.state.headerTitle}</Text>
         </View>
@@ -54,8 +69,8 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  TitleStyle:{
-    fontSize:22,
-    color:"#fff"
+  TitleStyle: {
+    fontSize: 22,
+    color: "#fff"
   }
 });

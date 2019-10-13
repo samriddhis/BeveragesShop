@@ -13,12 +13,21 @@ import { TabView, SceneMap } from "react-native-tab-view";
 import Animated from "react-native-reanimated";
 const { height, width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
-import ImagePicker from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-picker";
 import AboutComponent from "./profile/AboutComponent";
 import WalletComponent from "./profile/WalletComponent";
 import OrderComponent from "./profile/OrderComponent";
 import OfferComponent from "./profile/OfferComponent";
 import { connect } from "react-redux";
+import Api from "./Api/index";
+
+const options = {
+  title: "Select Avatar",
+  storageOptions: {
+    skipBackup: true,
+    path: "images"
+  }
+};
 
 class MyAccountComponent extends React.Component {
   constructor(props) {
@@ -38,14 +47,35 @@ class MyAccountComponent extends React.Component {
   _handleIndexChange = index => {
     this.setState({ index });
   };
-  _pressPictureUpload() {
-    ImagePicker.openPicker({
-      width: 72,
-      height: 72,
-      cropping: true
-    }).then(image => {
-      this.setState({ imageUrl: image.path });
-      console.log(image);
+
+  async uploadImage(response) {
+    try {
+      const resp = await Api.uploadImage({
+        image: response
+      });
+      this.setState({ imageUrl: resp.secure_url });
+      console.log("response of file upload is", resp);
+    } catch (error) {
+      console.log("error s", error);
+    }
+  }
+
+  async _pressPictureUpload() {
+    await ImagePicker.showImagePicker(options, response => {
+      console.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else if (response.customButton) {
+        console.log("User tapped custom button: ", response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        this.uploadImage(response);
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      }
     });
   }
 
@@ -88,6 +118,7 @@ class MyAccountComponent extends React.Component {
   };
 
   render() {
+    console.log("state is", this.state);
     return (
       <View style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"My account page"} />
@@ -119,7 +150,7 @@ class MyAccountComponent extends React.Component {
           <TabView
             navigationState={this.state}
             renderScene={SceneMap({
-              about: AboutComponent,
+              about: () => <AboutComponent imageUrl={this.state.imageUrl}/>,
               wallet: WalletComponent,
               order: OrderComponent,
               offer: OfferComponent
