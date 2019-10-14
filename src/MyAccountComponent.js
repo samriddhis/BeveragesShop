@@ -45,10 +45,12 @@ class MyAccountComponent extends React.Component {
     };
   }
   componentDidMount() {
-    if (this.props.profileDetails.url) {
-      this.setState({
-        imageUrl: this.props.profileDetails.url
-      });
+    if (this.props.profileDetails != null) {
+      if (this.props.profileDetails.url) {
+        this.setState({
+          imageUrl: this.props.profileDetails.url
+        });
+      }
     }
   }
 

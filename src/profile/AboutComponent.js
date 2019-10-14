@@ -17,13 +17,25 @@ class AboutComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.profileDetails.name,
-      emailId: this.props.profileDetails.emailId,
-      contact: this.props.profileDetails.contact,
-      address: this.props.profileDetails.address,
-      dob: this.props.profileDetails.dob
+      name:
+        this.props.profileDetails == null ? "" : this.props.profileDetails.name,
+      emailId:
+        this.props.profileDetails == null
+          ? ""
+          : this.props.profileDetails.emailId,
+      contact:
+        this.props.profileDetails == null
+          ? ""
+          : this.props.profileDetails.contact,
+      address:
+        this.props.profileDetails == null
+          ? ""
+          : this.props.profileDetails.address,
+      dob:
+        this.props.profileDetails == null ? "" : this.props.profileDetails.dob
     };
   }
+
   _pressUpdateProfile() {
     updateObj = {
       username: this.props.loginResponse.user,
