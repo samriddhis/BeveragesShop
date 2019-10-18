@@ -95,8 +95,8 @@ function* handleGetBeerList(action) {
 function* handleValidateLogin(action) {
   try {
     const response = yield call(Api.checkLogin, action.payload);
-    yield put(loginStatus(response));
     yield put(loginResponse(action.payload));
+    yield put(loginStatus(response));
   } catch (error) {
     console.log("error is", error);
   }

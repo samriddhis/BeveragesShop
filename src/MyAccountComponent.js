@@ -46,9 +46,9 @@ class MyAccountComponent extends React.Component {
   }
   componentDidMount() {
     if (this.props.profileDetails != null) {
-      if (this.props.profileDetails.url) {
+      if (this.props.profileDetails.profile_pic) {
         this.setState({
-          imageUrl: this.props.profileDetails.url
+          imageUrl: this.props.profileDetails.profile_pic
         });
       }
     }
@@ -65,7 +65,7 @@ class MyAccountComponent extends React.Component {
       });
       updateObj = {
         username: this.props.loginResponse.user,
-        url: resp.secure_url
+        profile_pic: resp.secure_url
       };
       this.props.dispatch(updateProfile({ updateObj }));
       this.setState({ imageUrl: resp.secure_url });
