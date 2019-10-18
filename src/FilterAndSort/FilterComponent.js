@@ -337,7 +337,7 @@ const Styles = StyleSheet.create({
   HeaderOuterContainer: {
     height: 50,
     width: width,
-    backgroundColor: "#0966aa",
+    backgroundColor: "#33809a",
     flexDirection: "row",
     padding: 12,
     justifyContent: "space-between"
@@ -346,7 +346,7 @@ const Styles = StyleSheet.create({
     bottom: 0,
     height: 50,
     width: width,
-    backgroundColor: "#0966aa",
+    backgroundColor: "#33809a",
     flexDirection: "row",
     padding: 12,
     justifyContent: "space-between",
@@ -357,7 +357,7 @@ const Styles = StyleSheet.create({
     margin: 14
   },
   SelectedItemStyle: {
-    color: "#0966aa",
+    color: "#33809a", //"#0966aa"
     fontWeight: "bold"
   },
   SelectedTextStyle: {

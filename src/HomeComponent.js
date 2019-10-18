@@ -173,7 +173,7 @@ class HomeComponent extends React.Component {
             <Text style={styles.TextStyle}>{item.ibu}</Text>
           </View>
           <View style={styles.TextViewStyle}>
-            <Text style={styles.TitleTextStyle}>Weight : </Text>
+            <Text style={styles.TitleTextStyle}>Ounces : </Text>
             <Text style={styles.TextStyle}>{item.ounces}</Text>
           </View>
           <View style={styles.TextViewStyle}>
@@ -185,18 +185,18 @@ class HomeComponent extends React.Component {
           <Icon
             name={"minus-circle"}
             type={"font-awesome"}
-            size={20}
+            size={22}
             style={styles.IconStyle}
-            color="#3993D5"
+            color="#33809a"
             onPress={() => this._deleteFromCart(item)}
           />
           <Text style={styles.countStyle}>{item.count}</Text>
           <Icon
             name={"plus-circle"}
             type={"font-awesome"}
-            size={20}
+            size={22}
             style={styles.IconStyle}
-            color="#3993D5"
+            color="#33809a"
             onPress={() => this._storeInCart(item)}
           />
         </View>
@@ -250,16 +250,15 @@ const styles = StyleSheet.create({
   },
   ListOuterContainer: {},
   FlatListStyle: {},
-  FlatListContainerStyle: {
-    width: width,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#D3D3D3"
-  },
+  //FlatListContainerStyle: {
+  //  width: width,
+  //  justifyContent: "center",
+  //  alignItems: "center",
+  //  backgroundColor: "#F0F0F0"
+  // },
   separator: {
     width: width,
-    height: 5,
-    backgroundColor: "#D3D3D3"
+    backgroundColor: "#F0F0F0"
   },
   indicatorViewStyle: {
     flex: 1,
@@ -272,9 +271,12 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   listViewStyle: {
+    margin: 10,
     flexDirection: "row",
-    backgroundColor: "#FFFFFF"
-    //  width: width / 1.05
+    backgroundColor: "#FFFFFF",
+    width: width / 1.05,
+    borderRadius: 20,
+    elevation: 10
   },
   TextViewStyle: {
     flexDirection: "row"
@@ -326,7 +328,7 @@ const styles = StyleSheet.create({
     right: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#0966aa",
+    backgroundColor: "#33809a", //"#0966aa"
     position: "absolute"
   }
 });

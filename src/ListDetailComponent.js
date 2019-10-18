@@ -8,9 +8,13 @@ class ListDetailComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemDetails: this.props.navigation.getParam("item")
+      itemDetails: this.props.navigation.getParam("item"),
+      showAll: false
     };
   }
+
+  showMore = () => this.setState({ showAll: true });
+  showLess = () => this.setState({ showAll: false });
 
   _backButtonPress() {
     this.props.navigation.goBack();
@@ -34,6 +38,9 @@ class ListDetailComponent extends React.Component {
   }
 
   render() {
+    const limit = 220;
+    const toShow =
+      this.state.itemDetails.description.substring(0, limit) + "...";
     return (
       <View style={styles.filterContainerStyle}>
         <View style={[styles.headerStyle]}>
@@ -63,17 +70,26 @@ class ListDetailComponent extends React.Component {
                 {this.state.itemDetails.style}
               </Text>
               <Text style={styles.SizeTxtStyle}>
+                Abv :{this.state.itemDetails.abv}
+              </Text>
+              <Text style={styles.SizeTxtStyle}>
+                Ounces :{this.state.itemDetails.ounces}
+              </Text>
+              <Text style={styles.SizeTxtStyle}>
                 Size : {this.state.itemDetails.quantity}{" "}
                 {this.state.itemDetails.unit}
+              </Text>
+              <Text style={styles.SizeTxtStyle}>
+                Price :{this.state.itemDetails.price}
               </Text>
 
               <View style={styles.PlusIconViewStyle}>
                 <Icon
                   name={"minus-circle"}
                   type={"font-awesome"}
-                  size={20}
+                  size={24}
                   style={styles.IconStyle}
-                  color="#3993D5"
+                  color="#33809a"
                   onPress={() => this._deleteFromCart(this.state.itemDetails)}
                 />
                 <Text style={styles.countStyle}>
@@ -82,9 +98,9 @@ class ListDetailComponent extends React.Component {
                 <Icon
                   name={"plus-circle"}
                   type={"font-awesome"}
-                  size={20}
+                  size={24}
                   style={styles.IconStyle}
-                  color="#3993D5"
+                  color="#33809a"
                   onPress={() => this._storeInCart(this.state.itemDetails)}
                 />
               </View>
@@ -92,9 +108,38 @@ class ListDetailComponent extends React.Component {
           </View>
           <View style={styles.BottomContainerStyle}>
             <Text style={styles.AboutTxtStyle}>About : </Text>
-            <Text style={styles.DescriptionTxtStyle}>
-              {this.state.itemDetails.description}
-            </Text>
+            {this.state.showAll ? (
+              <View>
+                <Text style={styles.DescriptionTxtStyle}>
+                  {this.state.itemDetails.description}
+                </Text>
+                <Text
+                  style={styles.moreLessStyle}
+                  onPress={() => this.showLess()}
+                >
+                  show less
+                </Text>
+              </View>
+            ) : (
+              <View>
+                {this.state.itemDetails.description.length <= limit ? (
+                  <Text style={styles.DescriptionTxtStyle}>
+                    {" "}
+                    {this.state.itemDetails.description}
+                  </Text>
+                ) : (
+                  <View>
+                    <Text style={styles.DescriptionTxtStyle}>{toShow}</Text>
+                    <Text
+                      style={styles.moreLessStyle}
+                      onPress={() => this.showMore()}
+                    >
+                      show more
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -114,8 +159,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 50,
     width: width,
-    backgroundColor: "#3973ad",
-    elevation: 10
+    backgroundColor: "#33809a",
+    elevation: 20
   },
   headerTextStyle: {
     marginLeft: 10,
@@ -129,7 +174,7 @@ const styles = StyleSheet.create({
   UpperContainerStyle: {
     flex: 0.3,
     flexDirection: "row",
-    margin: 5
+    margin: 10
   },
   ImageContainerStyle: {
     flex: 0.4,
@@ -137,8 +182,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   ImageStyle: {
-    width: width / 3,
-    height: height / 4,
+    width: 130,
+    height: 200,
     borderRadius: 20
   },
   NameTxtStyle: {
@@ -154,15 +199,18 @@ const styles = StyleSheet.create({
   SizeTxtStyle: {
     fontSize: 16,
     fontWeight: "200",
-    color: "gray"
+    color: "#909090"
   },
   DetailContainerStyle: {
     flex: 0.6,
     padding: 10
   },
+  moreLessStyle: {
+    color: "#33809a"
+  },
   BottomContainerStyle: {
     flex: 0.7,
-    padding: 10
+    margin: 15
   },
   AboutTxtStyle: {
     fontSize: 20,

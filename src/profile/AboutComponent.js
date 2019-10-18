@@ -134,6 +134,7 @@ class AboutComponent extends React.Component {
             <Button
               title="SAVE"
               onPress={() => this._pressUpdateProfile()}
+              buttonStyle={{ backgroundColor: "#33809a" }}
             ></Button>
           </View>
         </View>

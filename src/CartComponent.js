@@ -125,32 +125,41 @@ class CartComponent extends React.Component {
     return (
       <View style={styles.listViewStyle}>
         <View style={styles.IconViewStyle}>
-          <Icon
-            name={"md-beer"}
-            type={"ionicon"}
-            size={60}
-            style={styles.IconStyle}
+          <Image
+            style={{ width: 72, height: 90, borderRadius: 10 }}
+            source={{ uri: item.image }}
           />
         </View>
         <View style={styles.DetailsStyle}>
-          <Text style={styles.TextStyle}>Name : {item.name}</Text>
-          <Text style={styles.TextStyle}>Weight : {item.ounces}</Text>
-          <Text style={styles.TextStyle}>Style : {item.style}</Text>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Name : </Text>
+            <Text style={styles.TextStyle}>{item.name}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Ounces : </Text>
+            <Text style={styles.TextStyle}>{item.ounces}</Text>
+          </View>
+          <View style={styles.TextViewStyle}>
+            <Text style={styles.TitleTextStyle}>Style : </Text>
+            <Text style={styles.TextStyle}>{item.style}</Text>
+          </View>
         </View>
         <View style={styles.PlusIconViewStyle}>
           <Icon
             name={"minus-circle"}
             type={"font-awesome"}
-            size={20}
+            size={22}
             style={styles.IconStyle}
+            color="#33809a"
             onPress={() => this._deleteFromCart(item)}
           />
           <Text style={styles.countStyle}>{item.count}</Text>
           <Icon
             name={"plus-circle"}
             type={"font-awesome"}
-            size={20}
+            size={22}
             style={styles.IconStyle}
+            color="#33809a"
             onPress={() => this._storeInCart(item)}
           />
         </View>
@@ -212,12 +221,15 @@ const styles = StyleSheet.create({
   FlatListStyle: {},
   separator: {
     width: width,
-    height: height / 50,
-    backgroundColor: "#C0C0C0"
+    backgroundColor: "#F0F0F0"
   },
   listViewStyle: {
+    margin: 10,
     flexDirection: "row",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    width: width / 1.05,
+    borderRadius: 20,
+    elevation: 10
   },
   DetailsStyle: {
     flex: 6.3,
@@ -225,13 +237,10 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10
   },
-  TextStyle: {
-    fontSize: 16,
-    fontWeight: "bold"
-  },
   IconStyle: {},
   IconViewStyle: {
     flex: 2,
+    marginLeft: 10,
     padding: 5,
     justifyContent: "center",
     alignItems: "center"
@@ -250,6 +259,18 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 0.5,
     textAlign: "center"
+  },
+  TextViewStyle: {
+    flexDirection: "row"
+  },
+  TitleTextStyle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "gray"
+  },
+  TextStyle: {
+    fontSize: 14,
+    fontWeight: "100"
   }
 });
 

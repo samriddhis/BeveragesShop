@@ -124,7 +124,7 @@ class LoginComponent extends React.Component {
             {this.state.switchValue ? (
               <TouchableOpacity
                 style={styles.ButtonStyle}
-                color="#0966aa"
+                color="#33809a"
                 onPress={() => this._loginPress()}
               >
                 <Text style={{ color: "#fff" }}>{"Log in"}</Text>
@@ -132,7 +132,7 @@ class LoginComponent extends React.Component {
             ) : (
               <TouchableOpacity
                 style={styles.ButtonStyle}
-                color="#0966aa"
+                color="#33809a"
                 onPress={() => this._signupPress()}
               >
                 <Text style={{ color: "#fff" }}>{"Sign up"}</Text>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     width: width / 1.5,
     height: height / 16,
     borderRadius: 3,
-    backgroundColor: "#0966aa"
+    backgroundColor: "#33809a"
   },
   SwitchStyle: {
     marginLeft: 200

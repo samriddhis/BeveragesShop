@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   UpperViewContainer: {
     height: height / 5,
-    backgroundColor: "#3993D5",
+    backgroundColor:"#40a0c0",// "#3993D5",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 16,
-    backgroundColor: "#3993D5"
+    backgroundColor: "#40a0c0"//"#3993D5"
   },
   PencilIconStyle: {}
 });

@@ -24,7 +24,7 @@ export default class HeaderComponent extends React.Component {
   }
   _closeFilter() {
     console.log("goback");
-    navVar.goBack()
+    navVar.goBack();
   }
   render() {
     return (
@@ -57,9 +57,10 @@ const Styles = StyleSheet.create({
   OuterContainer: {
     height: 50,
     width: width,
-    backgroundColor: "#0966aa",
+    backgroundColor: "#33809a",
     flexDirection: "row",
-    padding: 10
+    padding: 10,
+    elevation: 10
   },
   IconViewStyle: {
     flex: 0.1
