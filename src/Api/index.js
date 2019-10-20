@@ -1,6 +1,6 @@
 class Api {
   constructor() {
-    console.log("Beer Api instantiated");
+   // console.log("Beer Api instantiated");
   }
 
   getListValue(params) {

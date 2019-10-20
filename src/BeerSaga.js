@@ -113,7 +113,7 @@ function* handleSignUp(action) {
     const response = yield call(Api.checkSignUp, action.payload);
     // console.log("response is", response);
     if (response.success === 0) {
-      console.log("unable to login");
+      //console.log("unable to login");
       alert(response.message);
     } else {
       alert(response.message);

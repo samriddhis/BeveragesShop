@@ -69,7 +69,7 @@ class MyAccountComponent extends React.Component {
       };
       this.props.dispatch(updateProfile({ updateObj }));
       this.setState({ imageUrl: resp.secure_url });
-      console.log("response of file upload is", resp);
+     // console.log("response of file upload is", resp);
     } catch (error) {
       console.log("error is", error);
     }
@@ -77,7 +77,7 @@ class MyAccountComponent extends React.Component {
 
   async _pressPictureUpload() {
     await ImagePicker.showImagePicker(options, response => {
-      console.log("Response = ", response);
+     // console.log("Response = ", response);
 
       if (response.didCancel) {
         console.log("User cancelled image picker");
@@ -133,7 +133,7 @@ class MyAccountComponent extends React.Component {
   };
 
   render() {
-    console.log("state is", this.state);
+   // console.log("state is", this.state);
     return (
       <View style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"My account page"} />

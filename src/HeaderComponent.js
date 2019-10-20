@@ -23,7 +23,6 @@ export default class HeaderComponent extends React.Component {
     //this.state.scope.props.navigation.openDrawer();
   }
   _closeFilter() {
-    console.log("goback");
     navVar.goBack();
   }
   render() {

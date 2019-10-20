@@ -36,7 +36,7 @@ export default class App extends React.Component {
 
   componentWillUnmount(){
      //here you can save your data in async storage
-    console.log("application is going to close",store.getState().cartStore.cartValue)
+    //console.log("application is going to close",store.getState().cartStore.cartValue)
     this.storeInAsyncStorage("CART_VALUE",JSON.stringify(store.getState().cartStore.cartValue) );
   }
 

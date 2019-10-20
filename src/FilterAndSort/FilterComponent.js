@@ -144,7 +144,6 @@ class FilterComponent extends React.Component {
     this.setState({
       StyleList: selectedArr
     });
-    console.log("update list in");
   }
 
   shouldComponentUpdate(props, state) {
@@ -158,7 +157,7 @@ class FilterComponent extends React.Component {
     this.props.navigation.goBack();
   }
   _applyFilter() {
-    console.log("Filter Applied");
+   // console.log("Filter Applied");
     var filterData = this.state.StyleList.filter(function(item) {
       return item.selected == true;
     });
@@ -176,6 +175,15 @@ class FilterComponent extends React.Component {
       StyleList: this.state.StyleList
     });
   }
+
+  _selectedSize(item, index) {
+    this.state.SizeList[index].selected = !this.state.SizeList[index]
+      .selected;
+    this.setState({
+      SizeList: this.state.SizeList
+    });
+  }
+
   _stylePressed() {
     this.setState({
       showStyle: true,
@@ -209,7 +217,7 @@ class FilterComponent extends React.Component {
     this.props.navigation.goBack();
   }
 
-  _renderItem = ({ item, index }) => {
+  _renderItemStyle = ({ item, index }) => {
     return (
       <View>
         <TouchableOpacity
@@ -223,6 +231,26 @@ class FilterComponent extends React.Component {
             ]}
           >
             {item.name}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  _renderItemSize = ({ item, index }) => {
+    return (
+      <View>
+        <TouchableOpacity
+          style={[Styles.ListBlockViewContainer]}
+          onPress={() => this._selectedSize(item, index)}
+        >
+          <Text
+            style={[
+              Styles.ItemTextStyle,
+              item.selected ? Styles.SelectedItemStyle : null
+            ]}
+          >
+            {item.name} {" ml"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -272,7 +300,7 @@ class FilterComponent extends React.Component {
                   contentContainerStyle={Styles.FlatListContainerStyle}
                   data={this.state.StyleList}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={this._renderItem}
+                  renderItem={this._renderItemStyle}
                   ItemSeparatorComponent={() => (
                     <View style={Styles.separator} />
                   )}
@@ -288,7 +316,7 @@ class FilterComponent extends React.Component {
                   contentContainerStyle={Styles.FlatListContainerStyle}
                   data={this.state.SizeList}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={this._renderItem}
+                  renderItem={this._renderItemSize}
                   ItemSeparatorComponent={() => (
                     <View style={Styles.separator} />
                   )}
