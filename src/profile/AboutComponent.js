@@ -6,7 +6,8 @@ import {
   ScrollView,
   Dimensions,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { connect } from "react-redux";
@@ -32,11 +33,25 @@ class AboutComponent extends React.Component {
           ? ""
           : this.props.profileDetails.address,
       dob:
-        this.props.profileDetails == null ? "" : this.props.profileDetails.dob
+        this.props.profileDetails == null ? "" : this.props.profileDetails.dob,
+      isLoading: false
     };
   }
 
+  shouldComponentUpdate(props, state) {
+    if (this.props.updateProfileRes !== props.updateProfileRes) {
+      this.setState({
+        isLoading: false
+      });
+      alert(props.updateProfileRes.message);
+    }
+    return true;
+  }
+
   _pressUpdateProfile() {
+    this.setState({
+      isLoading: true
+    });
     updateObj = {
       username: this.props.loginResponse.user,
       name: this.state.name,
@@ -49,95 +64,122 @@ class AboutComponent extends React.Component {
   }
   render() {
     return (
-      <ScrollView style={[styles.scene, { backgroundColor: "lightgray" }]}>
-        <View style={styles.OuterViewContainer}>
-          <View style={styles.BasicInfoViewStyle}>
-            <Text style={styles.BasicInfoStyle}>Basic Info</Text>
-          </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon name="user" type="simple-line-icon" color="gray" size={16} />
-            <Text style={styles.InfoTxtStyle}>First Name:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Name"
-              onChangeText={text => this.setState({ name: text })}
-            >
-              {this.state.name}
-            </TextInput>
-          </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon name="user" type="simple-line-icon" color="gray" size={16} />
-            <Text style={styles.InfoTxtStyle}>Last name:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Name"
-              onChangeText={text => this.setState({ name: text })}
-            >
-              {this.state.name}
-            </TextInput>
-          </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon
-              name="email-outline"
-              type="material-community"
-              color="gray"
-              size={18}
+      <ScrollView
+        style={[styles.scene, { backgroundColor: "lightgray" }]}
+      >
+        {this.state.isLoading ? (
+          <View style={styles.indicatorViewStyle}>
+            <ActivityIndicator
+              color="#33809a"
+              size="large"
+              style={styles.indicatorStyle}
             />
-            <Text style={styles.InfoTxtStyle}>Email:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Email"
-              onChangeText={text => this.setState({ emailId: text })}
-            >
-              {this.state.emailId}
-            </TextInput>
           </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon
-              name="calendar"
-              type="simple-line-icon"
-              color="gray"
-              size={16}
-            />
-            <Text style={styles.InfoTxtStyle}>DOB:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Dob"
-              onChangeText={text => this.setState({ dob: text })}
-            >
-              {this.state.dob}
-            </TextInput>
+        ) : (
+          <View style={styles.OuterViewContainer}>
+            <View style={styles.BasicInfoViewStyle}>
+              <Text style={styles.BasicInfoStyle}>Basic Info</Text>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon
+                name="user"
+                type="simple-line-icon"
+                color="gray"
+                size={16}
+              />
+              <Text style={styles.InfoTxtStyle}>First Name:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Name"
+                onChangeText={text => this.setState({ name: text })}
+              >
+                {this.state.name}
+              </TextInput>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon
+                name="user"
+                type="simple-line-icon"
+                color="gray"
+                size={16}
+              />
+              <Text style={styles.InfoTxtStyle}>Last name:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Name"
+                onChangeText={text => this.setState({ name: text })}
+              >
+                {this.state.name}
+              </TextInput>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon
+                name="email-outline"
+                type="material-community"
+                color="gray"
+                size={18}
+              />
+              <Text style={styles.InfoTxtStyle}>Email:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Email"
+                onChangeText={text => this.setState({ emailId: text })}
+              >
+                {this.state.emailId}
+              </TextInput>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon
+                name="calendar"
+                type="simple-line-icon"
+                color="gray"
+                size={16}
+              />
+              <Text style={styles.InfoTxtStyle}>DOB:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Dob"
+                onChangeText={text => this.setState({ dob: text })}
+              >
+                {this.state.dob}
+              </TextInput>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon name="mobile" type="font-awesome" color="gray" size={22} />
+              <Text style={styles.InfoTxtStyle}>Mobile Number:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Number"
+                onChangeText={text => this.setState({ contact: text })}
+              >
+                {this.state.contact}
+              </TextInput>
+            </View>
+            <View style={styles.InfoViewStyle}>
+              <Icon
+                name="home"
+                type="simple-line-icon"
+                color="gray"
+                size={16}
+              />
+              <Text style={styles.InfoTxtStyle}>Address:</Text>
+              <TextInput
+                style={styles.BasicInfoTxtStyle}
+                placeholder="Address"
+                onChangeText={text => this.setState({ address: text })}
+              >
+                {this.state.address}
+              </TextInput>
+            </View>
+            <View style={styles.SaveButtonStyle}>
+              <Button
+                title="SAVE"
+                onPress={() => this._pressUpdateProfile()}
+                buttonStyle={{ backgroundColor: "#33809a" }}
+              ></Button>
+            </View>
           </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon name="mobile" type="font-awesome" color="gray" size={22} />
-            <Text style={styles.InfoTxtStyle}>Mobile Number:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Number"
-              onChangeText={text => this.setState({ contact: text })}
-            >
-              {this.state.contact}
-            </TextInput>
-          </View>
-          <View style={styles.InfoViewStyle}>
-            <Icon name="home" type="simple-line-icon" color="gray" size={16} />
-            <Text style={styles.InfoTxtStyle}>Address:</Text>
-            <TextInput
-              style={styles.BasicInfoTxtStyle}
-              placeholder="Address"
-              onChangeText={text => this.setState({ address: text })}
-            >
-              {this.state.address}
-            </TextInput>
-          </View>
-          <View style={styles.SaveButtonStyle}>
-            <Button
-              title="SAVE"
-              onPress={() => this._pressUpdateProfile()}
-              buttonStyle={{ backgroundColor: "#33809a" }}
-            ></Button>
-          </View>
-        </View>
+        )}
       </ScrollView>
     );
   }
@@ -184,13 +226,19 @@ const styles = StyleSheet.create({
   },
   SaveButtonStyle: {
     marginTop: 80
+  },
+  indicatorStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
 function mapStateToProps(state) {
   return {
     profileDetails: state.cartStore.profileDetails,
-    loginResponse: state.cartStore.loginResponse
+    loginResponse: state.cartStore.loginResponse,
+    updateProfileRes: state.cartStore.updateProfileRes
   };
 }
 

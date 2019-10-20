@@ -2,7 +2,8 @@ import {
   SAVE_BEER_LIST,
   LOGIN_RESPONSE,
   LOGIN_STATUS,
-  SAVE_PROFILE_DETAILS
+  SAVE_PROFILE_DETAILS,
+  PROFILE_UPDATE_RESPONSE
 } from "./src/BeerSaga";
 
 const initialList = {
@@ -11,7 +12,8 @@ const initialList = {
   loginResponse: {},
   profileDetails: {},
   loginStatus: {},
-  filterData: []
+  filterData: [],
+  updateProfileRes: {}
 };
 
 export const cartStore = (state = initialList, action) => {
@@ -96,6 +98,12 @@ export const cartStore = (state = initialList, action) => {
       return {
         ...state,
         filterData: action.payload
+      };
+
+    case PROFILE_UPDATE_RESPONSE:
+      return {
+        ...state,
+        updateProfileRes: action.payload
       };
     default:
       return state;

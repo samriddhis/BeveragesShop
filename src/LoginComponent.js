@@ -41,7 +41,7 @@ class LoginComponent extends React.Component {
     if (props.loginStatus !== this.props.loginStatus) {
       if (props.loginStatus.success === 0) {
         // console.log("unable to login");
-        Alert.alert(props.loginStatus.message);
+        alert(props.loginStatus.message);
       } else {
         var validObj = {
           userName: this.state.userName,

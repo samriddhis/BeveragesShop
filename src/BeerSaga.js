@@ -12,6 +12,7 @@ export const LOGIN_RESPONSE = "LOGIN_RESPONSE";
 export const SIGNUP_REGISTER = "SIGNUP_REGISTER";
 export const GET_PROFILE_DETAILS = "GET_PROFILE_DETAILS";
 export const SAVE_PROFILE_DETAILS = "SAVE_PROFILE_DETAILS";
+export const PROFILE_UPDATE_RESPONSE = "PROFILE_UPDATE_RESPONSE";
 export const UPDATE_PROFILE_DETAILS = "UPDATE_PROFILE_DETAILS";
 
 /**
@@ -55,6 +56,11 @@ export const GetProfileDetails = payload => ({
 
 export const saveProfileDetails = payload => ({
   type: SAVE_PROFILE_DETAILS,
+  payload
+});
+
+export const profileUpdateResponse = payload => ({
+  type: PROFILE_UPDATE_RESPONSE,
   payload
 });
 
@@ -108,9 +114,9 @@ function* handleSignUp(action) {
     // console.log("response is", response);
     if (response.success === 0) {
       console.log("unable to login");
-      Alert.alert(response.message);
+      alert(response.message);
     } else {
-      Alert.alert(response.message);
+      alert(response.message);
     }
   } catch (error) {
     console.log("error is", error);
@@ -129,8 +135,10 @@ function* handleGetProfile(action) {
 function* handleUpdateProfile(action) {
   try {
     const response = yield call(Api.handleUpdateProfile, action.payload);
-    alert(response.message);
-    // console.log(response);
+    yield put(profileUpdateResponse(response));
+    if (action.payload.updateObj.profile_pic == undefined) {
+      alert(response.message);
+    }
   } catch (error) {
     console.log("error is", error);
   }
