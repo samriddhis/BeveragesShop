@@ -98,7 +98,7 @@ class Api {
         });
     });
   }
-  // upload a image
+  // upload a image code
   uploadImage(params) {
     let data = new FormData();
     data.append("file", {
