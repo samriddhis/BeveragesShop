@@ -157,7 +157,7 @@ class FilterComponent extends React.Component {
     this.props.navigation.goBack();
   }
   _applyFilter() {
-   // console.log("Filter Applied"); filter applied
+   // console.log("Filter Applied");
     var filterDataByStyle = this.state.StyleList.filter(function(item) {
       return item.selected == true;
     });
