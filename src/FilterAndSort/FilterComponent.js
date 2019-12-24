@@ -157,7 +157,7 @@ class FilterComponent extends React.Component {
     this.props.navigation.goBack();
   }
   _applyFilter() {
-   // console.log("Filter Applied"); filter applied here
+   // console.log("Filter Applied"); filter
     var filterDataByStyle = this.state.StyleList.filter(function(item) {
       return item.selected == true;
     });
@@ -178,7 +178,6 @@ class FilterComponent extends React.Component {
       StyleList: this.state.StyleList
     });
   }
-
 
   _selectedSize(item, index) {
     this.state.SizeList[index].selected = !this.state.SizeList[index]
