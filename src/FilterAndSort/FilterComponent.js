@@ -162,7 +162,7 @@ class FilterComponent extends React.Component {
     var filterDataByStyle = this.state.StyleList.filter(function(item) {
       return item.selected == true;
     });
-    var filterDataBySize = this.state.SizeList.filter(function(item) {
+    var filterDataBySizeValue = this.state.SizeList.filter(function(item) {
       return item.selected == true;
     });
     this.props.dispatch({
