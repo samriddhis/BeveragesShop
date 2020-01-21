@@ -98,22 +98,6 @@ class AboutComponent extends React.Component {
             </View>
             <View style={styles.InfoViewStyle}>
               <Icon
-                name="user"
-                type="simple-line-icon"
-                color="gray"
-                size={16}
-              />
-              <Text style={styles.InfoTxtStyle}>Last name:</Text>
-              <TextInput
-                style={styles.BasicInfoTxtStyle}
-                placeholder="Name"
-                onChangeText={text => this.setState({ name: text })}
-              >
-                {this.state.name}
-              </TextInput>
-            </View>
-            <View style={styles.InfoViewStyle}>
-              <Icon
                 name="email-outline"
                 type="material-community"
                 color="gray"

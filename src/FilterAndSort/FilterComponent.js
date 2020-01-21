@@ -157,7 +157,8 @@ class FilterComponent extends React.Component {
     this.props.navigation.goBack();
   }
   _applyFilter() {
-   // console.log("Filter Applied");
+    // console.log("Filter Applied");
+    this.props.navigation.goBack();
     var filterDataByStyle = this.state.StyleList.filter(function(item) {
       return item.selected == true;
     });
@@ -168,7 +169,6 @@ class FilterComponent extends React.Component {
       type: "FILTER_OPTION_APPLIED",
       payload: filterDataByStyle
     });
-    this.props.navigation.goBack();
   }
 
   _selectedStyle(item, index) {
@@ -180,8 +180,7 @@ class FilterComponent extends React.Component {
   }
 
   _selectedSize(item, index) {
-    this.state.SizeList[index].selected = !this.state.SizeList[index]
-      .selected;
+    this.state.SizeList[index].selected = !this.state.SizeList[index].selected;
     this.setState({
       SizeList: this.state.SizeList
     });
@@ -212,12 +211,12 @@ class FilterComponent extends React.Component {
   }
 
   _clearAllPressed() {
+    this.props.navigation.goBack();
     filterData = [];
     this.props.dispatch({
       type: "FILTER_OPTION_APPLIED",
       payload: filterData
     });
-    this.props.navigation.goBack();
   }
 
   _renderItemStyle = ({ item, index }) => {

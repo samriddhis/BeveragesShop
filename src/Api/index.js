@@ -8,7 +8,7 @@ class Api {
     //  console.log("params in get list value",params)
     return new Promise(function(resolve, reject) {
       try {
-        fetch("http://192.168.1.41:7000/beer")
+        fetch("https://aqueous-refuge-84015.herokuapp.com/beer")
           .then(response => response.json())
           .then(responseJson => {
             resolve(responseJson);
@@ -25,7 +25,7 @@ class Api {
 
   checkLogin(params) {
     return new Promise(function(resolve, reject) {
-      fetch("http://192.168.1.41:7000/login", {
+      fetch("https://aqueous-refuge-84015.herokuapp.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -45,7 +45,7 @@ class Api {
 
   checkSignUp(params) {
     return new Promise(function(resolve, reject) {
-      fetch("http://192.168.1.41:7000/signup", {
+      fetch("https://aqueous-refuge-84015.herokuapp.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -63,7 +63,7 @@ class Api {
     });
   }
   handleGetProfile(params) {
-    profileUrl = "http://192.168.1.41:7000/users/get_profile/" + params.user;
+    profileUrl = "https://aqueous-refuge-84015.herokuapp.com/users/get_profile/" + params.user;
     return new Promise(function(resolve, reject) {
       try {
         fetch(profileUrl)
@@ -82,7 +82,7 @@ class Api {
   handleUpdateProfile(params) {
     bodyObj = params.updateObj;
     return new Promise(function(resolve, reject) {
-      fetch("http://192.168.1.41:7000/users/create_profile", {
+      fetch("https://aqueous-refuge-84015.herokuapp.com/users/create_profile", {
         method: "POST",
         headers: {
           "content-type": "application/json"

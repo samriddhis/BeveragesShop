@@ -25,7 +25,8 @@ class HomeComponent extends React.Component {
       isLoading: true,
       listValue: [],
       countVal: 0,
-      showSpinner: false
+      showSpinner: false,
+      isFetching: false
     };
     navVar = this.props.navigation;
   }
@@ -36,7 +37,10 @@ class HomeComponent extends React.Component {
     if (this.props.beerList <= 0) {
       this.props.dispatch(getBeerList({}));
     } else {
-      this.setState({ listValue: this.props.beerList, isLoading: false });
+      this.setState({
+        listValue: this.props.beerList,
+        isLoading: false
+      });
     }
   }
   getStoredCartValue = async key => {
@@ -80,8 +84,15 @@ class HomeComponent extends React.Component {
     });
   }
 
+  _onRefresh() {
+    this.setState({ isFetching: true }, function() {
+      this.props.dispatch(getBeerList({}));
+    });
+  }
+
   shouldComponentUpdate(props, state) {
     //  console.log("props are",props)
+    //  this.setState({ isFetching: true });
     if (props.cartValue !== this.props.cartValue) {
       this.storeInAsyncStorage("CART_VALUE", JSON.stringify(props.cartValue));
     }
@@ -225,6 +236,8 @@ class HomeComponent extends React.Component {
               keyExtractor={(item, index) => index.toString()}
               renderItem={this._renderItem}
               ItemSeparatorComponent={() => <View style={styles.separator} />}
+              refreshing={this.state.isFetching}
+              onRefresh={() => this._onRefresh()}
             />
             <TouchableOpacity
               onPress={() => this._pressFilter()}
