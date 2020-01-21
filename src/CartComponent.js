@@ -151,6 +151,7 @@ class CartComponent extends React.Component {
             size={22}
             style={styles.IconStyle}
             color="#33809a"
+            underlayColor="transparent"
             onPress={() => this._deleteFromCart(item)}
           />
           <Text style={styles.countStyle}>{item.count}</Text>
@@ -160,6 +161,7 @@ class CartComponent extends React.Component {
             size={22}
             style={styles.IconStyle}
             color="#33809a"
+            underlayColor="transparent"
             onPress={() => this._storeInCart(item)}
           />
         </View>

@@ -33,14 +33,14 @@ export default class HeaderComponent extends React.Component {
             onPress={() => this._closeFilter()}
             style={Styles.IconViewStyle}
           >
-            <Icon name="arrow-back" type="material" color="#fff" size={35} />
+            <Icon name="arrow-back" type="material" color="#fff" size={35} underlayColor="transparent" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={() => this._openMenu()}
             style={Styles.IconViewStyle}
           >
-            <Icon name="ios-menu" type="ionicon" color="#fff" size={35} />
+            <Icon name="ios-menu" type="ionicon" color="#fff" size={35} underlayColor="transparent" />
           </TouchableOpacity>
         )}
 

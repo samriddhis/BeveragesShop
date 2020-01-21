@@ -199,6 +199,7 @@ class HomeComponent extends React.Component {
             size={22}
             style={styles.IconStyle}
             color="#33809a"
+            underlayColor="transparent"
             onPress={() => this._deleteFromCart(item)}
           />
           <Text style={styles.countStyle}>{item.count}</Text>
@@ -208,6 +209,7 @@ class HomeComponent extends React.Component {
             size={22}
             style={styles.IconStyle}
             color="#33809a"
+            underlayColor="transparent"
             onPress={() => this._storeInCart(item)}
           />
         </View>
@@ -248,6 +250,7 @@ class HomeComponent extends React.Component {
                 type={"antdesign"}
                 size={26}
                 color="white"
+                underlayColor="transparent"
               />
             </TouchableOpacity>
           </SafeAreaView>

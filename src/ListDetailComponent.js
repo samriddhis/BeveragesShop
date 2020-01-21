@@ -49,6 +49,7 @@ class ListDetailComponent extends React.Component {
             style={styles.filterStyle}
             name="arrowleft"
             type="antdesign"
+            underlayColor="transparent"
             onPress={() => this._backButtonPress()}
           />
         </View>
@@ -90,6 +91,7 @@ class ListDetailComponent extends React.Component {
                   size={24}
                   style={styles.IconStyle}
                   color="#33809a"
+                  underlayColor="transparent"
                   onPress={() => this._deleteFromCart(this.state.itemDetails)}
                 />
                 <Text style={styles.countStyle}>
@@ -101,6 +103,7 @@ class ListDetailComponent extends React.Component {
                   size={24}
                   style={styles.IconStyle}
                   color="#33809a"
+                  underlayColor="transparent"
                   onPress={() => this._storeInCart(this.state.itemDetails)}
                 />
               </View>

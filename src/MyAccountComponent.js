@@ -69,7 +69,7 @@ class MyAccountComponent extends React.Component {
       };
       this.props.dispatch(updateProfile({ updateObj }));
       this.setState({ imageUrl: resp.secure_url });
-     // console.log("response of file upload is", resp);
+      // console.log("response of file upload is", resp);
     } catch (error) {
       console.log("error is", error);
     }
@@ -77,7 +77,7 @@ class MyAccountComponent extends React.Component {
 
   async _pressPictureUpload() {
     await ImagePicker.showImagePicker(options, response => {
-     // console.log("Response = ", response);
+      // console.log("Response = ", response);
 
       if (response.didCancel) {
         console.log("User cancelled image picker");
@@ -133,7 +133,7 @@ class MyAccountComponent extends React.Component {
   };
 
   render() {
-   // console.log("state is", this.state);
+    // console.log("state is", this.state);
     return (
       <View style={styles.OuterContainer}>
         <HeaderComponent headerTitle={"My account page"} />
@@ -153,6 +153,7 @@ class MyAccountComponent extends React.Component {
                 type={"evilicon"}
                 size={18}
                 style={styles.PencilIconStyle}
+                underlayColor="transparent"
                 onPress={() => this._pressPictureUpload()}
               />
             </View>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   },
   UpperViewContainer: {
     height: height / 5,
-    backgroundColor:"#40a0c0",// "#3993D5",
+    backgroundColor: "#40a0c0", // "#3993D5",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderRadius: 16,
-    backgroundColor: "#40a0c0"//"#3993D5"
+    backgroundColor: "#40a0c0" //"#3993D5"
   },
   PencilIconStyle: {}
 });
